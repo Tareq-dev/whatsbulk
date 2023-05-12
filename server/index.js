@@ -18,8 +18,13 @@ app.use(fileUpload());
 
 const port = process.env.PORT || 5000;
 
-const client = new Client({ authStrategy: new LocalAuth() });
-
+// const client = new Client({ authStrategy: new LocalAuth() });
+const client = new Client({
+  authStrategy: new LocalAuth(),
+  puppeteer: {
+    args: ["--no-sandbox"],
+  },
+});
 // const client = new Client({
 //   puppeteer: {
 //     headless: true,
@@ -32,14 +37,13 @@ const client = new Client({ authStrategy: new LocalAuth() });
 const ably = new Ably.Realtime(
   "VSU5GA.7M4Y5Q:4Tok9TlkaNq5T8u5dKnJ42pu3oZrH0GYqKpkNPVqsHE"
 );
+const channel = ably.channels.get("scan");
 const channel1 = ably.channels.get("my-whatapp");
 const channel2 = ably.channels.get("loading-messages");
 const channel3 = ably.channels.get("user");
 
-app.get("/scan", (req, res) => {
-  client.on("qr", (qr) => {
-    // res.send({ QCode: qr });
-  });
+client.on("qr", (qr) => {
+  channel.publish("qr", qr);
 });
 
 client.on("ready", () => {
