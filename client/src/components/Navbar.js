@@ -31,7 +31,7 @@ function Navbar() {
                 <Link to="/main">Main</Link>
               </li>
               <li>
-                <a>Login</a>
+                <Link to="/login">Login</Link>
               </li>
               <li>
                 <a>Register</a>
@@ -51,7 +51,7 @@ function Navbar() {
               <Link to="/main">Main</Link>
             </li>
             <li>
-              <a>Login</a>
+              <Link to="/login">Login</Link>
             </li>
             <li>
               <a>Register</a>

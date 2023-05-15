@@ -1,8 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import forgot from "../images/forgot.jpg";
 import whatsapp from "../images/whatsapp-logo.png";
 
 function ForgotPassword() {
+  const [inputs, setInputs] = useState({
+    email: "",
+  });
+  const [errors, setErrors] = useState({
+    email: "",
+    server_error: "",
+  });
+  // const [loading, setLoading] = useState(false);
+  let errorObj = {};
+
+  const isValidEmail = (email) => {
+    // Check if email is in a valid format
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // front end validation
+    let check = true;
+    if (!isValidEmail(inputs.email)) {
+      check = false;
+      setErrors((prev) => ({ ...prev, email: "Invalid email address" }));
+    }
+
+    if (check) {
+      console.log(inputs);
+    }
+  };
+  const handleChange = (e) => {
+    setErrors((prev) => ({
+      ...prev,
+      [e.target.name]: "",
+      ["server_error"]: "",
+    }));
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
   return (
     <div className="flex justify-center items-center py-28">
       <div className={"flex flex-col md:flex-row bg-green-500 w-3/5"}>
@@ -14,27 +50,38 @@ function ForgotPassword() {
             <h2 className={"text-3xl md:text-4xl font-bold text-white mb-4"}>
               Reset Password
             </h2>
-            <form className={"flex flex-col"} action="/">
+            <form
+              onSubmit={handleSubmit}
+              className={"flex flex-col"}
+              action="/"
+            >
               <label htmlFor="email" className={"text-white text-xl mb-2"}>
                 Email
               </label>
               <input
-                type="email"
                 id="email"
+                className={
+                  errors.email
+                    ? "border-2 border-red-500 outline-none rounded-md py-2 px-3  "
+                    : "  outline-none rounded-md py-2 mb-3 px-3"
+                }
+                placeholder={"Enter your email"}
                 name="email"
-                className={"outline-none rounded-md text-white py-2 px-3 mb-4"}
-                placeholder="Enter your email"
-                required
+                onChange={handleChange}
               />
+              {errors.email ? (
+                <span className="text-red-700"> {errors.email}</span>
+              ) : (
+                ""
+              )}
 
-              <button
+              <input
                 type="submit"
                 className={
                   "bg-black text-white font-semibold rounded-lg py-2 px-3 hover:bg-gray-100 hover:text-green-700 transition-all duration-200"
                 }
-              >
-                Reset
-              </button>
+                value="Reset"
+              />
             </form>
           </div>
         </div>

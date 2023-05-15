@@ -9,7 +9,7 @@ import Navbar from "./../components/Navbar";
 
 function Home() {
   return (
-    <div className="bg-[#d2e6f0]">
+    <div className="bg-[#E0E8FF]">
       <Navbar />
       <Header />
       <Marketing />

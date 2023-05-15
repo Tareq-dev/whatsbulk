@@ -3,14 +3,20 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const Ably = require("ably");
-const fs = require("fs");
-const http = require("http");
-const csv = require("csv-express");
-
+const db = require("./db.js");
 const { Client, LocalAuth, MessageMedia } = require("whatsapp-web.js");
 const fileUpload = require("express-fileupload");
+const jwt = require("jsonwebtoken");
+// const randomstring = require("randomstring");
+const bcrypt = require("bcryptjs");
+const csv = require("csv-express");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -18,13 +24,13 @@ app.use(fileUpload());
 
 const port = process.env.PORT || 5000;
 
-// const client = new Client({ authStrategy: new LocalAuth() });
-const client = new Client({
-  authStrategy: new LocalAuth(),
-  puppeteer: {
-    args: ["--no-sandbox"],
-  },
-});
+const client = new Client({ authStrategy: new LocalAuth() });
+// const client = new Client({
+//   authStrategy: new LocalAuth(),
+//   puppeteer: {
+//     args: ["--no-sandbox"],
+//   },
+// });
 // const client = new Client({
 //   puppeteer: {
 //     headless: true,
@@ -74,6 +80,109 @@ const makingCsv = (Registered, Unregistered, res) => {
   res.csv(csvData, fileName);
 };
 
+app.post("/register", async (req, res) => {
+  // CHECK FOR EXISTING USER
+  const q = "SELECT * FROM register WHERE email = ?";
+  db.query(q, [req.body.email], (error, data) => {
+    if (error) return res.json(error);
+    if (data.length)
+      return res
+        .status(422)
+        .json({ status: 0, message: "User already exists!" });
+    // Hash the password and create a user
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(req.body.password, salt);
+    // return false;
+    const q = "INSERT INTO register (email, message, password) VALUES (?)";
+    const values = [req.body.email, req.body.message, hashedPassword];
+    db.query(q, [values], (error, data) => {
+      // console.log("data", data);
+      if (error) return res.json(error);
+      const query = "SELECT * FROM register WHERE id = ?";
+      db.query(query, [data.insertId], (error, signInData) => {
+        if (error) return res.json(error);
+        const token = jwt.sign({ id: signInData[0].id }, "jwtkey");
+        const { password, ...rest } = signInData[0];
+        return res
+          .cookie("access_token", token, {
+            httpOnly: true,
+          })
+          .status(200)
+          .json({ status: 1, data: rest, message: "User has been created!" });
+      });
+    });
+  });
+});
+
+app.get("/user", (req, res) => {
+  const email = req.query.email;
+  const q = "SELECT * FROM register WHERE email = ?";
+  db.query(q, [email], (error, data) => {
+    const result = {
+      email: data[0].email,
+      message: data[0].message,
+    };
+    res.send(result);
+  });
+});
+app.post("/update-message-count", (req, res) => {
+  // const data = req.body;
+  // console.log(data);
+  const q = "SELECT * FROM register WHERE email = ?";
+  db.query(q, [req.body.email], (error, data) => {
+    const query = `UPDATE register SET message = ? WHERE email=? `;
+    db.query(
+      query,
+      [req.body.remainBalance, req.body.email],
+      (err, result) => {}
+    );
+  });
+});
+
+app.post("/login", async (req, res) => {
+  // CHECK USER EXISTS
+
+  const q = "SELECT * FROM register WHERE email = ?";
+  try {
+    db.query(q, [req.body.email], (error, data) => {
+      if (error) return res.json(error);
+
+      if (data.length === 0)
+        return res.status(404).json({ status: 0, message: "User not found!" });
+
+      // CHECK PASSWORD
+      const salt = bcrypt.genSaltSync(10);
+      const hashedPassword = bcrypt.hashSync(req.body.password, salt);
+      const isPasswordCorrect = bcrypt.compareSync(
+        req.body.password,
+        data[0].password
+      );
+      9;
+      if (!isPasswordCorrect) {
+        return res.status(400).json({ status: 0, message: "Wrong Password!" });
+      }
+
+      const token = jwt.sign({ id: data[0].id }, "jwtkey");
+      const { password, ...rest } = data[0];
+
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+        })
+        .status(200)
+        .json({ status: 1, data: rest, message: "Login successful!" });
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.post("/logout", async (req, res) => {
+  res
+    .clearCookie("access_token")
+    .status(200)
+    .json({ status: 1, message: "Logout successful!" });
+});
 app.post("/send-message", async (req, res) => {
   const number = req.body.whatsappNumber;
   const text = req.body.message;
@@ -159,7 +268,6 @@ app.post("/send-message", async (req, res) => {
           await client.sendMessage(number_details._serialized, text);
           await new Promise((resolve) => setTimeout(resolve, 2000));
         }
-        // return res.send({ message: "Message send successfully" });
       }
       sendMessage();
     }
@@ -174,7 +282,6 @@ app.post("/send-media", async (req, res) => {
   const text = req.body.message;
   const CSVData = JSON.parse(req.body.CSVData);
   const files = req.files.file;
-
   try {
     // Single number send media
     if (number && text && files) {
@@ -190,7 +297,7 @@ app.post("/send-media", async (req, res) => {
         await client.sendMessage(chatId, media, {
           caption: text,
         });
-        return res.status(200).json({ success: true });
+        return res.send({ message: "Message send successfully" });
       } else {
         return res.send({ status: 201 });
       }

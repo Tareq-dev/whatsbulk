@@ -1,9 +1,99 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import registration from "../images/registration.jpg";
 import whatsapp from "../images/whatsapp-logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-function Login() {
+function Login({ setCurrentUser }) {
+  const [inputs, setInputs] = useState({
+    email: "",
+    password: "",
+    // I have to create a login api for getting message count for this user
+    message: "",
+  });
+
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    server_error: "",
+  });
+
+  // const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const isValidEmail = (email) => {
+    // Check if email is in a valid format
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // front end validation
+    let check = true;
+    if (!isValidEmail(inputs.email)) {
+      check = false;
+      setErrors((prev) => ({ ...prev, email: "Invalid email address" }));
+    }
+    if (inputs.password.length < 5) {
+      check = false;
+      setErrors((prev) => ({
+        ...prev,
+        password: "At least 5 characters long",
+      }));
+    }
+
+    if (check) {
+      try {
+        const res = await fetch(`http://localhost:5000/login`, {
+          method: "POST",
+          credentials: "include",
+          body: JSON.stringify(inputs),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await res.json();
+        if (data.status) {
+          toast.success(`🚀${data.message}`, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          setCurrentUser(data.data);
+          navigate("/main");
+          window.location.reload();
+
+        }
+        if (data.status === 0) {
+          toast.error(`${data.message}`, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+      } catch (error) {}
+    }
+  };
+
+  const handleChange = (e) => {
+    setErrors((prev) => ({
+      ...prev,
+      [e.target.name]: "",
+      ["server_error"]: "",
+    }));
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
   return (
     <div className="flex justify-center items-center py-20">
       <div className={"flex flex-col md:flex-row bg-green-500 w-3/5"}>
@@ -15,31 +105,54 @@ function Login() {
             <h2 className={"text-3xl md:text-4xl font-bold text-white mb-2"}>
               Welcome Back
             </h2>
-            <form className={"flex flex-col"} action="/">
+            <form
+              onSubmit={handleSubmit}
+              className={"flex flex-col"}
+              action="/"
+            >
               <label htmlFor="email" className={"text-white text-xl"}>
                 Email
               </label>
               <input
-                type="email"
                 id="email"
+                className={
+                  errors.email
+                    ? "border-2 border-red-500 outline-none rounded-md py-2 px-3  "
+                    : "  outline-none rounded-md py-2 px-3 mb-3"
+                }
+                placeholder={"Enter your email"}
                 name="email"
-                className={"outline-none rounded-md text-white py-2 px-3 mb-4"}
-                placeholder="Enter your email"
-                required
+                onChange={handleChange}
               />
-
+              {errors.email ? (
+                <span className="text-red-700"> {errors.email}</span>
+              ) : (
+                ""
+              )}
               <label htmlFor="password" className={"text-white text-xl"}>
                 Password
               </label>
               <input
                 type="password"
                 id="password"
+                className={
+                  errors.password
+                    ? "border-2 border-red-500 outline-none rounded-md py-2 px-3 "
+                    : "outline-none rounded-md  py-2 px-3"
+                }
+                placeholder={"Enter your password"}
                 name="password"
-                className={"outline-none rounded-md text-white py-2 px-3 mb-2"}
-                placeholder="Enter your password"
-                required
+                onChange={handleChange}
               />
-              <Link to="/forgot_password" className="font-bold text-md text-white mb-2">
+              {errors.password ? (
+                <span className="text-red-700">{errors.password}</span>
+              ) : (
+                ""
+              )}
+              <Link
+                to="/forgot_password"
+                className="font-bold text-md text-white py-1 mb-2"
+              >
                 Forgot Password ?
               </Link>
               <button

@@ -1,28 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import QRCode from "qrcode";
 import Ably from "ably";
 import { saveAs } from "file-saver";
 import Loading from "./../components/Loading";
 import Form from "./../components/Form";
-import { Link } from "react-router-dom";
+import MessageCountNav from "../components/MessageCountNav";
 
-function Main() {
+function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
   const [qrSrc, setQrSrc] = useState([]);
   const [hideQr, setHideQr] = useState(false);
   const [readyMessage, setReadyMessage] = useState("");
-  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [thanks, setThanks] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [loadingData, setLoadingData] = useState("");
-  const [csvLink, setCsvLink] = useState("");
   const [data, setData] = useState();
   const [client, setClient] = useState();
 
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.value);
   };
-
   useEffect(() => {
     const ably = new Ably.Realtime({
       key: "VSU5GA.7M4Y5Q:4Tok9TlkaNq5T8u5dKnJ42pu3oZrH0GYqKpkNPVqsHE",
@@ -58,40 +55,58 @@ function Main() {
     // return () => {
     //   ably.close();
     // };
+  }, [data]);
+  useEffect(() => {
+    setLoadingData("Loading...");
+    setTimeout(() => {
+      setLoadingData(null);
+    }, 2000); // close after 2 seconds
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   const handleDownload = () => {
     const blob = new Blob([data], { type: "text/csv;charset=utf-8" });
     const fileName = `${client.user_number}-${client.user_name}.csv`;
     saveAs(blob, fileName);
   };
+  const modalRef = useRef();
+  function handleModalClick(event) {
+    if (event.target === modalRef.current) {
+      setThanks(false);
+    }
+  }
   return (
     <div className="">
-      <div className="py-4 bg-green-600 relative">
-        <Link to="/" className="text-2xl font-bold text-white px-48">
-          Whats
-          <span className="text-yellow-300 bg-black px-2 rounded-md">Bulk</span>
-        </Link>
-      </div>
+      <MessageCountNav
+        setCurrentUser={setCurrentUser}
+        coinBalance={coinBalance}
+      />
 
       {thanks ? (
-        <div className="flex justify-center items-center py-28">
-          <div className="bg-gray-600 text-white px-6 py-24 rounded-lg">
-            <p className="font-semibold text-center text-lg mb-2">✅✅✅</p>
-            <p className="font-semibold text-center text-lg mb-2">
-              Thanks for using our service!
-            </p>
-            <p className="text-white text-center">
-              We appreciate your business and hope to see you again soon.
-            </p>
-            <div className="flex justify-center items-center">
-              <div className="pt-4">
-                <button
-                  className="bg-green-500 px-2 py-1 rounded-sm text-white font-semibold"
-                  onClick={handleDownload}
-                >
-                  Download Logs File 💾
-                </button>
+        <div
+          ref={modalRef}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 cursor-pointer"
+          onClick={handleModalClick}
+        >
+          <div className="modal-box relative bg-green-200 rounded-lg p-8">
+            <div className="flex justify-center items-center py-5">
+              <div className="bg-gray-600 text-white px-6 py-24 rounded-lg">
+                <p className="font-semibold text-center text-lg mb-2">✅✅✅</p>
+                <p className="font-semibold text-center text-lg mb-2">
+                  Thanks for using our service!
+                </p>
+                <p className="text-white text-center">
+                  We appreciate your business and hope to see you again soon.
+                </p>
+                <div className="flex justify-center items-center">
+                  <div className="pt-4">
+                    <button
+                      className="bg-green-500 px-2 py-1 rounded-sm text-white font-semibold"
+                      onClick={handleDownload}
+                    >
+                      Download Logs File 💾
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -104,8 +119,10 @@ function Main() {
               readyMessage={readyMessage}
               selectedOption={selectedOption}
               handleOptionChange={handleOptionChange}
-              setCsvLink={setCsvLink}
               setData={setData}
+              setCoinBalance={setCoinBalance}
+              coinBalance={coinBalance}
+              currentUser={currentUser}
             />
           ) : (
             <div className="py-16 my-16 px-8 bg-white md:flex md:justify-center items-center md:mx-64 mx-8">
