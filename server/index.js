@@ -183,6 +183,51 @@ app.post("/logout", async (req, res) => {
     .status(200)
     .json({ status: 1, message: "Logout successful!" });
 });
+
+connection.connect((err) => {
+  if (err) {
+    console.error("Error connecting to the database:", err);
+    return;
+  }
+  console.log("Connected to the database");
+});
+
+// Function to send a message
+const sendMessage = (id, email) => {
+  // Check if the user has enough balance
+  connection.query(
+    "SELECT message FROM register WHERE id = ?",
+    [id],
+    (err, results) => {
+      if (err) {
+        console.error("Error retrieving message count:", err);
+        return;
+      }
+
+      const messageCount = results[0].message;
+      if (messageCount > 0) {
+        // Update the message count in the database
+        connection.query(
+          "UPDATE register SET message = ? WHERE id = ?",
+          [messageCount - 1, id],
+          (err) => {
+            if (err) {
+              console.error("Error updating message count:", err);
+              return;
+            }
+
+            console.log("Message sent successfully");
+
+            // TODO: Send the message to the user
+          }
+        );
+      } else {
+        console.log("You have not enough balance");
+      }
+    }
+  );
+};
+
 app.post("/send-message", async (req, res) => {
   const number = req.body.whatsappNumber;
   const text = req.body.message;

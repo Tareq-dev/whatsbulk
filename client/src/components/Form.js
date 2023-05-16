@@ -47,46 +47,30 @@ function Form({
     formData.append("CSVData", JSON.stringify(CSVData));
     if (!file) {
       try {
-        if (coinBalance >= 1) {
-          const response = await axios.post(
-            "http://localhost:5000/send-message",
-            formData
-          );
-          if (response.data) {
-            const remainBalance = coinBalance - 1;
-            const data = {
-              remainBalance,
-              email,
-            };
-            const response = await axios.post(
-              "http://localhost:5000/update-message-count",
-              data
-            );
-            console.log(response);
-          }
-          setData(response.data);
+        const response = await axios.post(
+          "http://localhost:5000/send-message",
+          formData
+        );
+        setData(response.data);
 
-          if (response.data.status === 201) {
-            setServer_error("Unregistered number");
-          }
-          if (response.data.message) {
-            toast.success(`${response.data.message}`, {
-              position: "top-center",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-            setWhatsappNumber("");
-            setMessage("");
-            setFile(null);
-            setCoinBalance(coinBalance - 1);
-          }
-        } else {
-          setBalanceAlert(true);
+        if (response.data.status === 201) {
+          setServer_error("Unregistered number");
+        }
+        if (response.data.message) {
+          toast.success(`${response.data.message}`, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          setWhatsappNumber("");
+          setMessage("");
+          setFile(null);
+          setCoinBalance(coinBalance - 1);
         }
       } catch (error) {
         console.log(error);
@@ -94,33 +78,28 @@ function Form({
     }
     if (file) {
       try {
-        if (coinBalance >= 1) {
-          const response = await axios.post(
-            "http://localhost:5000/send-media",
-            formData
-          );
-          console.log(response);
-          if (response.data.status === 201) {
-            setServer_error("Unregistered number");
-          }
-          if (response.data.message) {
-            toast.success(`🚀${response.data.message}`, {
-              position: "top-center",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-            setWhatsappNumber("");
-            setMessage("");
-            setFile(null);
-            setCoinBalance(coinBalance - 1);
-          }
-        } else {
-          setBalanceAlert(true);
+        const response = await axios.post(
+          "http://localhost:5000/send-media",
+          formData
+        );
+        console.log(response);
+        if (response.data.status === 201) {
+          setServer_error("Unregistered number");
+        }
+        if (response.data.message) {
+          toast.success(`🚀${response.data.message}`, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          setWhatsappNumber("");
+          setMessage("");
+          setFile(null);
         }
       } catch (error) {}
     }
