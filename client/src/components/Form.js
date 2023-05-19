@@ -12,8 +12,6 @@ function Form({
   handleOptionChange,
   readyMessage,
   loadingData,
-  setCsvLink,
-  coinBalance,
   setData,
 }) {
   const [whatsappNumber, setWhatsappNumber] = useState("");
@@ -24,7 +22,6 @@ function Form({
   const [balanceAlert, setBalanceAlert] = useState(false);
   const email = currentUser.email;
   const [CSVData, setCSVData] = useState([]);
-
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     Papa.parse(file, {
@@ -42,21 +39,25 @@ function Form({
     const sanitized_number = whatsappNumber.toString().replace(/[-+ )(]/g, "");
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("email", email);
     formData.append("whatsappNumber", sanitized_number);
     formData.append("message", message);
     formData.append("CSVData", JSON.stringify(CSVData));
     if (!file) {
       try {
         const response = await axios.post(
-          "http://localhost:5000/send-message",
+          "http://localhost:5000/api/send-message",
           formData
         );
         setData(response.data);
+        // if (response.data.messageCount) {
+        //   setCoinBalance(response?.data?.messageCount);
+        // }
 
         if (response.data.status === 201) {
           setServer_error("Unregistered number");
         }
-        if (response.data.message) {
+        if (response.data.success) {
           toast.success(`${response.data.message}`, {
             position: "top-center",
             autoClose: 2000,
@@ -70,7 +71,23 @@ function Form({
           setWhatsappNumber("");
           setMessage("");
           setFile(null);
-          setCoinBalance(coinBalance - 1);
+          // setCoinBalance(coinBalance - 1);
+        }
+        if (response.data.success === 0) {
+          toast.error(`${response.data.message}`, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          setBalanceAlert(true);
+          setWhatsappNumber("");
+          setMessage("");
+          setFile(null);
         }
       } catch (error) {
         console.log(error);
@@ -79,13 +96,15 @@ function Form({
     if (file) {
       try {
         const response = await axios.post(
-          "http://localhost:5000/send-media",
+          "http://localhost:5000/api/send-media",
           formData
         );
-        console.log(response);
         if (response.data.status === 201) {
           setServer_error("Unregistered number");
         }
+        // if (response.data.messageCount) {
+        //   setCoinBalance(response?.data?.messageCount);
+        // }
         if (response.data.message) {
           toast.success(`🚀${response.data.message}`, {
             position: "top-center",
@@ -97,6 +116,22 @@ function Form({
             progress: undefined,
             theme: "light",
           });
+          setWhatsappNumber("");
+          setMessage("");
+          setFile(null);
+        }
+        if (response.data.success === 0) {
+          toast.error(`${response.data.message}`, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          setBalanceAlert(true);
           setWhatsappNumber("");
           setMessage("");
           setFile(null);
@@ -287,7 +322,7 @@ function Form({
           </div>
 
           {loadingData ? (
-            <div className="fixed top-10 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white opacity-1 text-green-500 px-4 py-2 rounded-lg shadow-lg z-50">
+            <div className="fixed top-30 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white opacity-1 text-green-500 px-4 py-2 rounded-lg shadow-lg z-50">
               <span role="img" aria-label="Loading">
                 🔄
               </span>

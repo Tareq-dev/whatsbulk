@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import forgot from "../images/forgot.jpg";
 import whatsapp from "../images/whatsapp-logo.png";
+import { toast } from "react-toastify";
 
 function ForgotPassword() {
   const [inputs, setInputs] = useState({
@@ -10,17 +11,13 @@ function ForgotPassword() {
     email: "",
     server_error: "",
   });
-  // const [loading, setLoading] = useState(false);
-  let errorObj = {};
 
   const isValidEmail = (email) => {
-    // Check if email is in a valid format
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // front end validation
     let check = true;
     if (!isValidEmail(inputs.email)) {
       check = false;
@@ -28,7 +25,44 @@ function ForgotPassword() {
     }
 
     if (check) {
-      console.log(inputs);
+      const email = inputs.email;
+      console.log(email)
+      const res = await fetch(`http://localhost:5000/api/reset`, {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify({ email }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+
+      if (data.status === 1) {
+        toast.success(`${data.message}`, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        // inputs.email("");
+      }
+      if (data.status === 0) {
+        toast.error(`${data.message}`, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        // inputs.email("");
+      }
     }
   };
   const handleChange = (e) => {
@@ -41,7 +75,7 @@ function ForgotPassword() {
   };
   return (
     <div className="flex justify-center items-center py-28">
-      <div className={"flex flex-col md:flex-row bg-green-500 w-3/5"}>
+      <div className={"flex flex-col md:flex-row bg-green-500 md:w-3/5 py-4"}>
         <div className={"md:w-1/2 flex justify-center items-center px-12"}>
           <div className={"w-full max-w-sm"}>
             <div className="flex justify-center items-center">
@@ -85,7 +119,7 @@ function ForgotPassword() {
             </form>
           </div>
         </div>
-        <div className={"md:w-1/2 bg-white flex justify-center items-center"}>
+        <div className={"md:w-1/2 bg-white hidden md:flex justify-center items-center"}>
           <div className={"w-full max-w-sm p-8"}>
             <img src={forgot} alt="" />
           </div>

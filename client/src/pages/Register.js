@@ -8,7 +8,7 @@ function Register({ setCurrentUser }) {
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
-    message: "1",
+    message: "5",
   });
 
   const [errors, setErrors] = useState({
@@ -42,7 +42,7 @@ function Register({ setCurrentUser }) {
 
     if (check) {
       try {
-        const res = await fetch(`http://localhost:5000/register`, {
+        const res = await fetch(`http://localhost:5000/api/register`, {
           method: "POST",
           credentials: "include",
           body: JSON.stringify(inputs),
@@ -94,7 +94,7 @@ function Register({ setCurrentUser }) {
   };
   return (
     <div className="flex justify-center items-center py-20">
-      <div className={"flex flex-col md:flex-row bg-green-500 w-3/5"}>
+      <div className={"flex flex-col md:flex-row bg-green-500 md:w-3/5 py-10 md:py-0"}>
         <div className={"md:w-1/2 flex justify-center items-center px-12"}>
           <div className={"w-full max-w-sm"}>
             <div className="flex justify-center items-center">
@@ -158,7 +158,7 @@ function Register({ setCurrentUser }) {
             </form>
           </div>
         </div>
-        <div className={"md:w-1/2 bg-white flex justify-center items-center"}>
+        <div className={"md:w-1/2 bg-white hidden md:flex justify-center items-center"}>
           <div className={"w-full max-w-sm p-8"}>
             <img src={login} alt="" />
 

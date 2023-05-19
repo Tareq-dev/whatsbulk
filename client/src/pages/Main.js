@@ -45,6 +45,7 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
     channel2.subscribe("loading-messages", (message) => {
       setLoadingData(message.data);
       if (message.data === "All messages sent!") {
+        setLoadingData(null);
         setThanks(true);
       }
     });

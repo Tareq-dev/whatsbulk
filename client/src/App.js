@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import NewPassword from "./pages/NewPassword";
 // import Loading from "./components/Loading";
 function App() {
   const [currentUser, setCurrentUser] = useState(
@@ -15,6 +16,7 @@ function App() {
   const [coinBalance, setCoinBalance] = useState(0);
 
   const email = currentUser?.email;
+
   const Protected = ({ isLoggedIn, children }) => {
     if (!isLoggedIn) {
       return <Navigate to="/login" />;
@@ -31,10 +33,10 @@ function App() {
   };
   useEffect(() => {
     if (email) {
-      fetch(`http://localhost:5000/user?email=${email}`).then((res) =>
+      fetch(`http://localhost:5000/api/user?email=${email}`).then((res) =>
         res.json().then((data) => {
-          if (email === data.email) {
-            setCoinBalance(Number(data.message));
+          if (email === data?.email) {
+            setCoinBalance(Number(data?.message));
           }
         })
       );
@@ -45,7 +47,6 @@ function App() {
     // console.log('this is test');
     // console.log(localStorage.getItem("user"));
   }, [currentUser]);
-  console.log(coinBalance);
   return (
     <div>
       <Routes>
@@ -59,6 +60,7 @@ function App() {
           element={<Register setCurrentUser={setCurrentUser} />}
         />
         <Route path="/forgot_password" element={<ForgotPassword />} />
+        <Route path="/reset/:token" element={<NewPassword />} />
         <Route
           path="/main"
           element={
