@@ -46,7 +46,7 @@ function Form({
     if (!file) {
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/send-message",
+          "https://whatsapp-server-production-f5c7.up.railway.app/api/send-message",
           formData
         );
         setData(response.data);
@@ -96,7 +96,7 @@ function Form({
     if (file) {
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/send-media",
+          "https://whatsapp-server-production-f5c7.up.railway.app/api/send-media",
           formData
         );
         if (response.data.status === 201) {

@@ -43,14 +43,17 @@ function Login({ setCurrentUser }) {
 
     if (check) {
       try {
-        const res = await fetch(`http://localhost:5000/api/login`, {
-          method: "POST",
-          credentials: "include",
-          body: JSON.stringify(inputs),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const res = await fetch(
+          `https://whatsapp-server-production-f5c7.up.railway.app/api/login`,
+          {
+            method: "POST",
+            credentials: "include",
+            body: JSON.stringify(inputs),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         const data = await res.json();
         if (data.status) {
@@ -95,7 +98,11 @@ function Login({ setCurrentUser }) {
 
   return (
     <div className="flex justify-center items-center py-20">
-      <div className={"flex flex-col md:flex-row bg-green-500 md:w-3/5 py-10 md:py-0"}>
+      <div
+        className={
+          "flex flex-col md:flex-row bg-green-500 md:w-3/5 py-10 md:py-0"
+        }
+      >
         <div className={"md:w-1/2 flex justify-center items-center px-12"}>
           <div className={"w-full max-w-sm"}>
             <div className="flex justify-center items-center">
@@ -165,7 +172,11 @@ function Login({ setCurrentUser }) {
             </form>
           </div>
         </div>
-        <div className={"md:w-1/2 bg-white hidden md:flex justify-center items-center"}>
+        <div
+          className={
+            "md:w-1/2 bg-white hidden md:flex justify-center items-center"
+          }
+        >
           <div className={"w-full max-w-sm p-8"}>
             <img src={registration} alt="" />
 

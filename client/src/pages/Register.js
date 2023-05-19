@@ -42,7 +42,7 @@ function Register({ setCurrentUser }) {
 
     if (check) {
       try {
-        const res = await fetch(`http://localhost:5000/api/register`, {
+        const res = await fetch(`https://whatsapp-server-production-f5c7.up.railway.app/api/register`, {
           method: "POST",
           credentials: "include",
           body: JSON.stringify(inputs),

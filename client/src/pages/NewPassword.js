@@ -18,14 +18,17 @@ export default function NewPassword() {
         newPassword,
         token,
       };
-      const res = await fetch(`http://localhost:5000/api/reset-password`, {
-        method: "POST",
-        credentials: "include",
-        body: JSON.stringify({ resetData }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await fetch(
+        `https://whatsapp-server-production-f5c7.up.railway.app/api/reset-password`,
+        {
+          method: "POST",
+          credentials: "include",
+          body: JSON.stringify({ resetData }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const data = await res.json();
 

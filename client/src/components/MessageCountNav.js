@@ -7,13 +7,20 @@ function MessageCountNav({ coinBalance, setCurrentUser }) {
   const navigate = useNavigate();
 
   const logout = async () => {
-    const res = await fetch(`http://localhost:5000/api/logout`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    let headers = new Headers();
+
+    headers.append("Content-Type", "application/json");
+    headers.append("Accept", "application/json");
+    headers.append("Origin", "http://localhost:3000");
+
+    const res = await fetch(
+      `https://whatsapp-server-production-f5c7.up.railway.app/api/logout`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: headers,
+      }
+    );
     // if (res.status) {
     //   toast.success(`${res.message}`, {
     //     position: "top-center",

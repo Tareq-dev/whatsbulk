@@ -26,15 +26,18 @@ function ForgotPassword() {
 
     if (check) {
       const email = inputs.email;
-      console.log(email)
-      const res = await fetch(`http://localhost:5000/api/reset`, {
-        method: "POST",
-        credentials: "include",
-        body: JSON.stringify({ email }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      console.log(email);
+      const res = await fetch(
+        `https://whatsapp-server-production-f5c7.up.railway.app/api/reset`,
+        {
+          method: "POST",
+          credentials: "include",
+          body: JSON.stringify({ email }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await res.json();
 
       if (data.status === 1) {
@@ -119,7 +122,11 @@ function ForgotPassword() {
             </form>
           </div>
         </div>
-        <div className={"md:w-1/2 bg-white hidden md:flex justify-center items-center"}>
+        <div
+          className={
+            "md:w-1/2 bg-white hidden md:flex justify-center items-center"
+          }
+        >
           <div className={"w-full max-w-sm p-8"}>
             <img src={forgot} alt="" />
           </div>

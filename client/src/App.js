@@ -33,7 +33,9 @@ function App() {
   };
   useEffect(() => {
     if (email) {
-      fetch(`http://localhost:5000/api/user?email=${email}`).then((res) =>
+      fetch(
+        `https://whatsapp-server-production-f5c7.up.railway.app/api/user?email=${email}`
+      ).then((res) =>
         res.json().then((data) => {
           if (email === data?.email) {
             setCoinBalance(Number(data?.message));
