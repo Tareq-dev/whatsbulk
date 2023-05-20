@@ -10,6 +10,7 @@ function Register({ setCurrentUser }) {
     password: "",
     message: "5",
   });
+  const baseUrl = process.env.REACT_APP_BASE_URL;
 
   const [errors, setErrors] = useState({
     email: "",
@@ -42,17 +43,14 @@ function Register({ setCurrentUser }) {
 
     if (check) {
       try {
-        const res = await fetch(
-          `https://whatsapp-server-production-f5c7.up.railway.app/api/register`,
-          {
-            method: "POST",
-            credentials: "include",
-            body: JSON.stringify(inputs),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const res = await fetch(`${baseUrl}/api/register`, {
+          method: "POST",
+          credentials: "include",
+          body: JSON.stringify(inputs),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
         const data = await res.json();
         if (data.status) {
@@ -70,7 +68,7 @@ function Register({ setCurrentUser }) {
           navigate("/main");
           window.location.reload();
         }
-        console.log(data);
+
         if (data.status === 0) {
           toast.error(`${data.message}`, {
             position: "top-center",

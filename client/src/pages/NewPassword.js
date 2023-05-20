@@ -9,6 +9,7 @@ export default function NewPassword() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const baseUrl = process.env.REACT_APP_BASE_URL;
 
   const handleUpdatePassword = async (e) => {
     e.preventDefault();
@@ -18,17 +19,14 @@ export default function NewPassword() {
         newPassword,
         token,
       };
-      const res = await fetch(
-        `https://whatsapp-server-production-f5c7.up.railway.app/api/reset-password`,
-        {
-          method: "POST",
-          credentials: "include",
-          body: JSON.stringify({ resetData }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await fetch(`${baseUrl}/api/reset-password`, {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify({ resetData }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       const data = await res.json();
 

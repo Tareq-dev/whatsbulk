@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { FiAlertOctagon } from "react-icons/fi";
 
 function Form({
+  coinBalance,
   currentUser,
   setCoinBalance,
   selectedOption,
@@ -22,6 +23,8 @@ function Form({
   const [balanceAlert, setBalanceAlert] = useState(false);
   const email = currentUser.email;
   const [CSVData, setCSVData] = useState([]);
+  const baseUrl = process.env.REACT_APP_BASE_URL;
+
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     Papa.parse(file, {
@@ -46,13 +49,12 @@ function Form({
     if (!file) {
       try {
         const response = await axios.post(
-          "https://whatsapp-server-production-f5c7.up.railway.app/api/send-message",
+          `${baseUrl}/api/send-message`,
           formData
         );
         setData(response.data);
-        if (response.data.messageCount) {
-          setCoinBalance(response?.data?.messageCount);
-        }
+
+        // const remain = response?.data?.messageCount;
 
         if (response.data.status === 201) {
           toast.error("Unregistered number", {
@@ -80,6 +82,7 @@ function Form({
           setWhatsappNumber("");
           setMessage("");
           setFile(null);
+          // setCoinBalance(coinBalance - 1);
         }
         if (response.data.success === 0) {
           toast.error(`${response.data.message}`, {
@@ -115,7 +118,7 @@ function Form({
     if (file) {
       try {
         const response = await axios.post(
-          "https://whatsapp-server-production-f5c7.up.railway.app/api/send-media",
+          `${baseUrl}/api/send-media`,
           formData
         );
         if (response.data.status === 201) {
@@ -130,9 +133,10 @@ function Form({
             theme: "light",
           });
         }
-        if (response.data.messageCount) {
-          setCoinBalance(response?.data?.messageCount);
-        }
+        // const reamin = response?.data?.messageCount;
+        // if (reamin) {
+        //   setCoinBalance(reamin);
+        // }
         if (response.data.success) {
           toast.success(`🚀${response.data.message}`, {
             position: "top-center",

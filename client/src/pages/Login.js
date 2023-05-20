@@ -11,7 +11,7 @@ function Login({ setCurrentUser }) {
     // I have to create a login api for getting message count for this user
     message: "",
   });
-
+  const baseUrl = process.env.REACT_APP_BASE_URL;
   const [errors, setErrors] = useState({
     email: "",
     password: "",
@@ -43,17 +43,14 @@ function Login({ setCurrentUser }) {
 
     if (check) {
       try {
-        const res = await fetch(
-          `https://whatsapp-server-production-f5c7.up.railway.app/api/login`,
-          {
-            method: "POST",
-            credentials: "include",
-            body: JSON.stringify(inputs),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const res = await fetch(`${baseUrl}/api/login`, {
+          method: "POST",
+          credentials: "include",
+          body: JSON.stringify(inputs),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
         const data = await res.json();
         if (data.status) {

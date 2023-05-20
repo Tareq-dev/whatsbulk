@@ -31,11 +31,10 @@ function App() {
       return false;
     }
   };
+  const baseUrl = process.env.REACT_APP_BASE_URL;
   useEffect(() => {
     if (email) {
-      fetch(
-        `https://whatsapp-server-production-f5c7.up.railway.app/api/user?email=${email}`
-      ).then((res) =>
+      fetch(`${baseUrl}/api/user?email=${email}`).then((res) =>
         res.json().then((data) => {
           if (email === data?.email) {
             setCoinBalance(Number(data?.message));

@@ -5,7 +5,7 @@ import { CgLogOff } from "react-icons/cg";
 
 function MessageCountNav({ coinBalance, setCurrentUser }) {
   const navigate = useNavigate();
-
+  const baseUrl = process.env.REACT_APP_BASE_URL;
   const logout = async () => {
     let headers = new Headers();
 
@@ -13,14 +13,11 @@ function MessageCountNav({ coinBalance, setCurrentUser }) {
     headers.append("Accept", "application/json");
     headers.append("Origin", "http://localhost:3000");
 
-    const res = await fetch(
-      `https://whatsapp-server-production-f5c7.up.railway.app/api/logout`,
-      {
-        method: "POST",
-        credentials: "include",
-        headers: headers,
-      }
-    );
+    const res = await fetch(`${baseUrl}/api/logout`, {
+      method: "POST",
+      credentials: "include",
+      headers: headers,
+    });
     // if (res.status) {
     //   toast.success(`${res.message}`, {
     //     position: "top-center",

@@ -11,7 +11,7 @@ function ForgotPassword() {
     email: "",
     server_error: "",
   });
-
+  const baseUrl = process.env.REACT_APP_BASE_URL;
   const isValidEmail = (email) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
@@ -26,18 +26,15 @@ function ForgotPassword() {
 
     if (check) {
       const email = inputs.email;
-      console.log(email);
-      const res = await fetch(
-        `https://whatsapp-server-production-f5c7.up.railway.app/api/reset`,
-        {
-          method: "POST",
-          credentials: "include",
-          body: JSON.stringify({ email }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+     
+      const res = await fetch(`${baseUrl}/api/reset`, {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify({ email }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       const data = await res.json();
 
       if (data.status === 1) {
