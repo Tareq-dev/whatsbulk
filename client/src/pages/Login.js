@@ -69,7 +69,7 @@ function Login({ setCurrentUser }) {
           });
           setCurrentUser(data.data);
           navigate("/main");
-          window.location.reload();
+          // window.location.reload();
         }
         if (data.status === 0) {
           toast.error(`${data.message}`, {
@@ -97,10 +97,10 @@ function Login({ setCurrentUser }) {
   };
 
   return (
-    <div className="flex justify-center items-center py-20">
+    <div className="flex justify-center items-center py-20 ">
       <div
         className={
-          "flex flex-col md:flex-row bg-green-500 md:w-3/5 py-10 md:py-0"
+          "flex flex-col md:flex-row bg-green-500 md:w-3/5 py-10 md:py-0 rounded"
         }
       >
         <div className={"md:w-1/2 flex justify-center items-center px-12"}>
@@ -169,6 +169,12 @@ function Login({ setCurrentUser }) {
               >
                 Login
               </button>
+              <p className="md:hidden text-white py-2">
+                Don't have an account?{" "}
+                <span className="underline text-black cursor-pointer">
+                  <Link to="/sign_up">Create One</Link>
+                </span>
+              </p>
             </form>
           </div>
         </div>

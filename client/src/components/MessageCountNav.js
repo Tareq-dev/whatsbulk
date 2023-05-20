@@ -40,7 +40,7 @@ function MessageCountNav({ coinBalance, setCurrentUser }) {
   };
 
   return (
-    <div className="py-3 bg-green-600  md:pl-28 md:pr-10 px-1">
+    <div className="py-4 bg-green-600  md:pl-28 md:pr-10 px-2">
       <div className="flex justify-between items-center">
         <Link to="/" className="text-2xl font-bold text-white ">
           Whats
@@ -48,7 +48,7 @@ function MessageCountNav({ coinBalance, setCurrentUser }) {
         </Link>
         <button
           onClick={logout}
-          className="bg-[#E0E8FF] font-bold flex md:ml-8 py-1 text-sm md:text-md  px-2 rounded-md flex justify-center items-center"
+          className="bg-[#E0E8FF] font-bold flex md:ml-8 py-1 text-sm md:text-md  px-2 rounded-md  justify-center items-center"
         >
           <CgLogOff size={24} className="mr-2" /> Log Out
         </button>

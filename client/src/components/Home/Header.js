@@ -7,7 +7,7 @@ import { RiCustomerService2Fill } from "react-icons/ri";
 function Header() {
   return (
     <header className=" dark:bg-gray-900">
-      <div className="container flex flex-col px-6 py-10 mx-auto space-y-6 lg:h-[32rem] lg:py-16 lg:flex-row lg:items-center">
+      <div className="container flex flex-col px-6 pt-10 md:py-10 mx-auto space-y-6 lg:h-[32rem] lg:py-16 lg:flex-row lg:items-center">
         <div className="w-full lg:w-1/2">
           <div className="lg:max-w-lg">
             <span className="text-gray-600 text-sm italic">
@@ -144,7 +144,7 @@ function Header() {
           </div>
         </div>
 
-        <div className="flex items-center justify-center w-full h-96 lg:w-1/2">
+        <div className="hidden md:flex items-center justify-center w-full h-96 lg:w-1/2">
           <img
             className="object-fill h-full max-w-2xl rounded-md"
             src={hero}
@@ -152,22 +152,22 @@ function Header() {
           />
         </div>
       </div>
-      <div className="my-8 py-10 grid grid-cols-1 md:grid-cols-3 md:gap-6 px-14 mx-10 ">
-        <div className="px-14 py-6 bg-[#16A34A] rounded-2xl">
+      <div className="my-8 md:py-10 grid grid-cols-1 md:grid-cols-3 md:gap-6 px-14 md:mx-10 ">
+        <div className="px-14 py-6 bg-[#16A34A] rounded-2xl mb-6">
           <div className="flex justify-center items-center py-4">
             <TbMessage2 className="text-white" size={60} />
           </div>
           <h2 className="text-2xl text-white text-center font-bold">10M+</h2>
           <p className="text-xl text-white text-center">Monthly Messages</p>
         </div>
-        <div className="px-14  py-6 bg-[#16A34A]  rounded-2xl">
+        <div className="px-14  py-6 bg-[#16A34A]  rounded-2xl mb-6">
           <div className="flex justify-center items-center py-4">
             <BsFillPersonVcardFill className="text-white" size={60} />
           </div>
           <h2 className="text-2xl text-white font-bold text-center">1000+</h2>
           <p className="text-xl text-white text-center">Customers Serve</p>
         </div>
-        <div className="px-14 py-6 bg-[#16A34A]  rounded-2xl">
+        <div className="px-14 py-6 bg-[#16A34A]  rounded-2xl mb-6">
           <div className="flex justify-center items-center py-4">
             <RiCustomerService2Fill className="text-white " size={60} />
           </div>

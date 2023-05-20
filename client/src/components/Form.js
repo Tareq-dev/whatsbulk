@@ -50,12 +50,21 @@ function Form({
           formData
         );
         setData(response.data);
-        // if (response.data.messageCount) {
-        //   setCoinBalance(response?.data?.messageCount);
-        // }
+        if (response.data.messageCount) {
+          setCoinBalance(response?.data?.messageCount);
+        }
 
         if (response.data.status === 201) {
-          setServer_error("Unregistered number");
+          toast.error("Unregistered number", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         }
         if (response.data.success) {
           toast.success(`${response.data.message}`, {
@@ -71,7 +80,6 @@ function Form({
           setWhatsappNumber("");
           setMessage("");
           setFile(null);
-          // setCoinBalance(coinBalance - 1);
         }
         if (response.data.success === 0) {
           toast.error(`${response.data.message}`, {
@@ -90,7 +98,18 @@ function Form({
           setFile(null);
         }
       } catch (error) {
-        console.log(error);
+        if (error) {
+          toast.error("Somethings wronge provided", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
       }
     }
     if (file) {
@@ -100,12 +119,21 @@ function Form({
           formData
         );
         if (response.data.status === 201) {
-          setServer_error("Unregistered number");
+          toast.error("Unregistered number", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         }
-        // if (response.data.messageCount) {
-        //   setCoinBalance(response?.data?.messageCount);
-        // }
-        if (response.data.message) {
+        if (response.data.messageCount) {
+          setCoinBalance(response?.data?.messageCount);
+        }
+        if (response.data.success) {
           toast.success(`🚀${response.data.message}`, {
             position: "top-center",
             autoClose: 2000,
@@ -182,7 +210,7 @@ function Form({
         <form
           onSubmit={handleSubmit}
           encType="multipart/form-data"
-          className="flex flex-col items-center my-4 bg-green-100 pt-4 pb-10 px-20"
+          className="flex flex-col items-center my-4 bg-green-100 py-5 md:pb-10 px-6 md:px-20"
         >
           {readyMessage ? (
             <div className="flex justify-center items-center mb-4">
@@ -260,9 +288,6 @@ function Form({
             )}
           </div>
 
-          {server_error && (
-            <p className="text-center text-red-500 text-xl">{server_error}</p>
-          )}
           {unReg ? (
             <div>
               <p className="text-red-500 text-center mt-1">

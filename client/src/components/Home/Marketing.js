@@ -2,11 +2,11 @@ import React from "react";
 import marketing from "../../images/marketing.png";
 function Marketing() {
   return (
-    <div className="flex w-full justify-center items-center py-14 px-14">
-      <div className="w-1/2 flex justify-center">
+    <div className="md:flex w-full justify-center items-center md:p-14">
+      <div className="md:w-1/2 flex justify-center">
         <img src={marketing} alt="marketing" />
       </div>
-      <div className="w-1/2">
+      <div className="md:w-1/2 mx-2">
         <h2 className="text-3xl text-[#16A34A] font-bold py-4">
           Complete Marketing Solution <br /> To Grow Using WhatsApp
         </h2>

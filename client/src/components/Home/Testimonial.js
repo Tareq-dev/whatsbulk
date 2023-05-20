@@ -7,13 +7,13 @@ import { FaQuoteRight } from "react-icons/fa";
 
 function Testimonial() {
   return (
-    <section className=" body-font">
-      <div className="container px-5 py-24 mx-auto">
+    <section className="body-font">
+      <div className="container px-5 py-10 md:py-24 mx-auto">
         <h1 className="text-4xl text-center text-[#16A34A] pb-12  font-bold">
           Testimonials
         </h1>
-        <p className="text-2xl text-[#16A34A] font-bold flex mb-8 py-4 justify-center items-center">
-          <FaQuoteLeft className="text-[#44CB65] mr-2" size={28} /> What our clients
+        <p className="text-lg md:text-2xl text-[#16A34A] font-bold flex mb-8 py-4 justify-center items-center">
+          <FaQuoteLeft className="text-[#44CB65] mr-2 " size={28} /> What our clients
           say about us <FaQuoteRight className="text-[#44CB65] ml-2" size={28} />
         </p>
         <div className="flex flex-wrap -m-4">

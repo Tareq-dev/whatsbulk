@@ -88,9 +88,9 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
           className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 cursor-pointer"
           onClick={handleModalClick}
         >
-          <div className="modal-box relative bg-green-200 rounded-lg p-8">
+          <div className="modal-box relative bg-green-200 rounded-lg md:p-8">
             <div className="flex justify-center items-center py-5">
-              <div className="bg-gray-600 text-white px-6 py-24 rounded-lg">
+              <div className="bg-gray-600 text-white md:px-6 py-14 md:py-24 rounded-lg">
                 <p className="font-semibold text-center text-lg mb-2">✅✅✅</p>
                 <p className="font-semibold text-center text-lg mb-2">
                   Thanks for using our service!
@@ -126,7 +126,7 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
               currentUser={currentUser}
             />
           ) : (
-            <div className="py-16 my-16 px-8 bg-white md:flex md:justify-center items-center md:mx-64 mx-8">
+            <div className="py-8 md:py-16 my-8 md:my-16 px-8 bg-white md:flex md:justify-center items-center md:mx-64">
               <div>
                 <h1 className="text-2xl font-bold mb-6">
                   Use WhatsApp On your computer
