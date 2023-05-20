@@ -69,7 +69,7 @@ function Login({ setCurrentUser }) {
           });
           setCurrentUser(data.data);
           navigate("/main");
-          // window.location.reload();
+          window.location.reload();
         }
         if (data.status === 0) {
           toast.error(`${data.message}`, {
