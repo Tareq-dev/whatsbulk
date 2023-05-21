@@ -38,11 +38,12 @@ function Navbar() {
           </ul>
         </div>
         <div>
-          <Link to="/" className="text-2xl font-bold text-white md:px-48">
+          <Link
+            to="/"
+            className="text-2xl font-bold text-white bg-black rounded-md px-2"
+          >
             Whats
-            <span className="text-yellow-300 bg-black px-2 rounded-md">
-              Bulk
-            </span>
+            <span className="text-yellow-300">Bulk</span>
           </Link>
         </div>
       </div>

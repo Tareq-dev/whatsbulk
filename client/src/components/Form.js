@@ -54,7 +54,6 @@ function Form({
         );
         setData(response.data);
 
-        // const remain = response?.data?.messageCount;
 
         if (response.data.status === 201) {
           toast.error("Unregistered number", {
@@ -82,7 +81,6 @@ function Form({
           setWhatsappNumber("");
           setMessage("");
           setFile(null);
-          // setCoinBalance(coinBalance - 1);
         }
         if (response.data.success === 0) {
           toast.error(`${response.data.message}`, {

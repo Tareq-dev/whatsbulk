@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CgLogOff } from "react-icons/cg";
 // import { toast } from "react-toastify";
+import Ably from "ably";
 
 function MessageCountNav({ coinBalance, setCurrentUser }) {
+  const [msg, setMsg] = useState(coinBalance);
   const navigate = useNavigate();
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const logout = async () => {
@@ -35,13 +37,27 @@ function MessageCountNav({ coinBalance, setCurrentUser }) {
     setCurrentUser(null);
     navigate("/");
   };
-
+  useEffect(() => {
+    const ably = new Ably.Realtime({
+      key: "VSU5GA.7M4Y5Q:4Tok9TlkaNq5T8u5dKnJ42pu3oZrH0GYqKpkNPVqsHE",
+    });
+    const msgCountEvent = ably.channels.get("messageCount");
+    /////message count event
+    msgCountEvent.subscribe((message) => {
+      setMsg(message?.data?.updatedBalance);
+    });
+  }, []);
   return (
     <div className="py-4 bg-green-600  md:pl-28 md:pr-10 px-2">
       <div className="flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold text-white ">
+        <Link
+          to="/"
+          className="text-2xl font-bold text-white bg-black rounded-md px-2"
+        >
           Whats
-          <span className="text-yellow-300 bg-black px-2 rounded-md">Bulk</span>
+          <span className="text-yellow-300">
+            Bulk
+          </span>
         </Link>
         <button
           onClick={logout}
@@ -53,7 +69,7 @@ function MessageCountNav({ coinBalance, setCurrentUser }) {
 
       <div className="flex  justify-center mt-3">
         <div className="text-black text-sm md:text-lg bg-yellow-300 px-2  rounded-md">
-          <p>Massage : 💰 {coinBalance}</p>
+          <p>Massage : 💰 {msg}</p>
         </div>
       </div>
     </div>

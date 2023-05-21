@@ -24,6 +24,7 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
     const ably = new Ably.Realtime({
       key: "VSU5GA.7M4Y5Q:4Tok9TlkaNq5T8u5dKnJ42pu3oZrH0GYqKpkNPVqsHE",
     });
+
     const channel = ably.channels.get("my-whatapp");
     const channelQr = ably.channels.get("scan");
     setLoading(true);
@@ -39,6 +40,8 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
       setReadyMessage(`${message.data}`);
       setHideQr(true);
     });
+
+  
     const channel2 = ably.channels.get("loading-messages");
     const channel3 = ably.channels.get("user");
 
