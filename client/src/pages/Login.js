@@ -3,23 +3,29 @@ import registration from "../images/registration.jpg";
 import whatsapp from "../images/whatsapp-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import GlobalLoading from "./../components/GlobalLoading";
 
 function Login({ setCurrentUser }) {
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const user = localStorage.getItem("user");
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
     // I have to create a login api for getting message count for this user
     message: "",
   });
-  const baseUrl = process.env.REACT_APP_BASE_URL;
+  const baseUrl = process.env.REACT_APP_BASE_URL2;
   const [errors, setErrors] = useState({
     email: "",
     password: "",
     server_error: "",
   });
 
+  if (loading) {
+    return <GlobalLoading />;
+  }
   // const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const isValidEmail = (email) => {
     // Check if email is in a valid format
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -43,6 +49,7 @@ function Login({ setCurrentUser }) {
 
     if (check) {
       try {
+        setLoading(true);
         const res = await fetch(`${baseUrl}/api/login`, {
           method: "POST",
           credentials: "include",
@@ -64,9 +71,16 @@ function Login({ setCurrentUser }) {
             progress: undefined,
             theme: "light",
           });
+          setLoading(true);
           setCurrentUser(data.data);
-          navigate("/main");
-          window.location.reload();
+          if (user?.role === "admin") {
+            navigate("/dashboard");
+            window.location.reload();
+          } else {
+            // window.location.reload();
+
+            navigate("/");
+          }
         }
         if (data.status === 0) {
           toast.error(`${data.message}`, {

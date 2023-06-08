@@ -7,10 +7,10 @@ import Happy from "./../components/Home/Happy";
 import Footer from "./../components/Home/Footer";
 import Navbar from "./../components/Navbar";
 
-function Home() {
+function Home({ admin, currentUser }) {
   return (
     <div className="bg-[#E0E8FF]">
-      <Navbar />
+      <Navbar admin={admin} currentUser={currentUser} />
       <Header />
       <Marketing />
       <Features />

@@ -65,7 +65,6 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
     setTimeout(() => {
       setLoadingData(null);
     }, 2000); // close after 2 seconds
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleDownload = () => {
     const blob = new Blob([data], { type: "text/csv;charset=utf-8" });
@@ -81,6 +80,7 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
   return (
     <div className="">
       <MessageCountNav
+      currentUser={currentUser}
         setCurrentUser={setCurrentUser}
         coinBalance={coinBalance}
       />

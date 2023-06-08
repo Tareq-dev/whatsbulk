@@ -4,21 +4,13 @@ import { CgLogOff } from "react-icons/cg";
 // import { toast } from "react-toastify";
 import Ably from "ably";
 
-function MessageCountNav({ coinBalance, setCurrentUser }) {
+function MessageCountNav({ currentUser, coinBalance, setCurrentUser }) {
   const [msg, setMsg] = useState(coinBalance);
   const navigate = useNavigate();
-  const baseUrl = process.env.REACT_APP_BASE_URL;
+  const baseUrl = process.env.REACT_APP_BASE_URL2;
   const logout = async () => {
-    let headers = new Headers();
-
-    headers.append("Content-Type", "application/json");
-    headers.append("Accept", "application/json");
-    headers.append("Origin", "http://localhost:3000");
-
     const res = await fetch(`${baseUrl}/api/logout`, {
       method: "POST",
-      credentials: "include",
-      headers: headers,
     });
     // if (res.status) {
     //   toast.success(`${res.message}`, {
@@ -33,6 +25,7 @@ function MessageCountNav({ coinBalance, setCurrentUser }) {
     //   });
     //   navigate("/");
     // }
+    // window.location.reload();
     localStorage.removeItem("user");
     setCurrentUser(null);
     navigate("/");
@@ -55,9 +48,7 @@ function MessageCountNav({ coinBalance, setCurrentUser }) {
           className="text-2xl font-bold text-white bg-black rounded-md px-2"
         >
           Whats
-          <span className="text-yellow-300">
-            Bulk
-          </span>
+          <span className="text-yellow-300">Bulk</span>
         </Link>
         <button
           onClick={logout}
@@ -68,8 +59,11 @@ function MessageCountNav({ coinBalance, setCurrentUser }) {
       </div>
 
       <div className="flex  justify-center mt-3">
+        <div className="text-black text-sm md:text-lg bg-yellow-300 px-2 mr-8 rounded-md">
+          <p>{currentUser?.email}</p>
+        </div>
         <div className="text-black text-sm md:text-lg bg-yellow-300 px-2  rounded-md">
-          <p>Massage : 💰 {msg}</p>
+          <p>Message : 💰 {msg}</p>
         </div>
       </div>
     </div>

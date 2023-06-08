@@ -23,7 +23,7 @@ function Form({
   const [balanceAlert, setBalanceAlert] = useState(false);
   const email = currentUser.email;
   const [CSVData, setCSVData] = useState([]);
-  const baseUrl = process.env.REACT_APP_BASE_URL;
+  const baseUrl = process.env.REACT_APP_BASE_URL2;
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
@@ -53,7 +53,6 @@ function Form({
           formData
         );
         setData(response.data);
-
 
         if (response.data.status === 201) {
           toast.error("Unregistered number", {
@@ -131,10 +130,7 @@ function Form({
             theme: "light",
           });
         }
-        // const reamin = response?.data?.messageCount;
-        // if (reamin) {
-        //   setCoinBalance(reamin);
-        // }
+        
         if (response.data.success) {
           toast.success(`🚀${response.data.message}`, {
             position: "top-center",

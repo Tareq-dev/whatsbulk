@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Navbar() {
+function Navbar({ admin, currentUser }) {
   return (
     <div className="navbar bg-[#16A34A] border-b px-2 text-white">
       <div className="navbar-start">
@@ -29,12 +29,22 @@ function Navbar() {
             <li>
               <Link to="/main">Main</Link>
             </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/sign_up">Register</Link>
-            </li>
+            {!currentUser && (
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+            )}
+            {!currentUser && (
+              <li>
+                <Link to="/sign_up">Register</Link>
+              </li>
+            )}
+
+            {admin?.role === "admin" && (
+              <li>
+                <Link to="/dashboard">Dashboard</Link>
+              </li>
+            )}
           </ul>
         </div>
         <div>
@@ -52,12 +62,22 @@ function Navbar() {
           <li>
             <Link to="/main">Main</Link>
           </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/sign_up">Register</Link>
-          </li>
+          {!currentUser && (
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+            )}
+            {!currentUser && (
+              <li>
+                <Link to="/sign_up">Register</Link>
+              </li>
+            )}
+
+          {admin?.role === "admin" && (
+            <li>
+              <Link to="/dashboard">Dashboard</Link>
+            </li>
+          )}
         </ul>
       </div>
     </div>
