@@ -10,14 +10,7 @@ import ChartPie from "../../components/dashboard/Chartpie";
 
 function AdminDashboard() {
   return (
-    <div className="mx-4">
-      {/* <!-- Page content here --> */}
-
-      <div className="flex justify-center">
-        <h1 className="text-center font-bold text-xl md:text-3xl mb-16 text-green-500 bg-white py-2 px-6 rounded-xl">
-          Welcome To DashBoard
-        </h1>
-      </div>
+    <div className="mx-4 py-10">
       <div className="flex flex-col md:flex-row my-4">
         <div className="bg-white mx-auto mb-4 md:my-2 md:mx-4 border shadow-lg rounded-xl w-full md:w-60 relative">
           <div className="px-5 py-4">

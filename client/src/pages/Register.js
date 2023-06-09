@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import login from "../images/login.jpg";
 import whatsapp from "../images/whatsapp-logo.png";
 import { toast } from "react-toastify";
-
+import { AiOutlineLeft } from "react-icons/ai";
 function Register({ setCurrentUser }) {
   const [inputs, setInputs] = useState({
     email: "",
@@ -189,6 +189,14 @@ function Register({ setCurrentUser }) {
                 }
               >
                 Login
+              </Link>
+            </div>
+            <div className="flex justify-center ">
+              <Link to="/" className="flex mt-6 px-4 items-center">
+                <AiOutlineLeft className="block" size={30} />
+                <span className="block text-green-500 font-semibold">
+                  Back To Home
+                </span>
               </Link>
             </div>
           </div>

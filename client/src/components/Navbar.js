@@ -1,7 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "./context/auth";
+import { CgLogOff } from "react-icons/cg";
 
-function Navbar({ admin, currentUser }) {
+function Navbar() {
+  const baseUrl = process.env.REACT_APP_BASE_URL2;
+  const auth = useAuth();
+  const user = auth?.user;
+  const navigate = useNavigate();
+  const logout = async () => {
+    const res = await fetch(`${baseUrl}/api/logout`, {
+      method: "POST",
+    });
+
+    auth.logout();
+    navigate("/");
+  };
   return (
     <div className="navbar bg-[#16A34A] border-b px-2 text-white">
       <div className="navbar-start">
@@ -29,18 +43,29 @@ function Navbar({ admin, currentUser }) {
             <li>
               <Link to="/main">Main</Link>
             </li>
-            {!currentUser && (
+            {user ? (
+              <div className="flex md:justify-end items-center">
+                {user?.role === "" && (
+                  <button
+                    onClick={logout}
+                    className="bg-[#E0E8FF] text-black font-bold flex text-sm md:text-md  px-2 rounded-md md:ml-16 justify-center items-center"
+                  >
+                    <CgLogOff size={24} className="mr-2" /> Log Out
+                  </button>
+                )}
+              </div>
+            ) : (
               <li>
                 <Link to="/login">Login</Link>
               </li>
             )}
-            {!currentUser && (
+
+            {!user && (
               <li>
                 <Link to="/sign_up">Register</Link>
               </li>
             )}
-
-            {admin?.role === "admin" && (
+            {user?.role === "admin" && (
               <li>
                 <Link to="/dashboard">Dashboard</Link>
               </li>
@@ -62,18 +87,29 @@ function Navbar({ admin, currentUser }) {
           <li>
             <Link to="/main">Main</Link>
           </li>
-          {!currentUser && (
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-            )}
-            {!currentUser && (
-              <li>
-                <Link to="/sign_up">Register</Link>
-              </li>
-            )}
+          {user ? (
+            <div className="flex md:justify-end items-center">
+              {user?.role === "" && (
+                <button
+                  onClick={logout}
+                  className="bg-[#E0E8FF] text-black font-bold flex text-sm md:text-md  px-2 rounded-md ml-16 justify-center items-center"
+                >
+                  <CgLogOff size={24} className="mr-2" /> Log Out
+                </button>
+              )}
+            </div>
+          ) : (
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+          )}
 
-          {admin?.role === "admin" && (
+          {!user && (
+            <li>
+              <Link to="/sign_up">Register</Link>
+            </li>
+          )}
+          {user?.role === "admin" && (
             <li>
               <Link to="/dashboard">Dashboard</Link>
             </li>

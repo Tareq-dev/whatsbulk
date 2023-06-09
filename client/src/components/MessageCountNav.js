@@ -1,35 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { CgLogOff } from "react-icons/cg";
+
 // import { toast } from "react-toastify";
 import Ably from "ably";
+import { useAuth } from "./context/auth";
 
-function MessageCountNav({ currentUser, coinBalance, setCurrentUser }) {
-  const [msg, setMsg] = useState(coinBalance);
-  const navigate = useNavigate();
-  const baseUrl = process.env.REACT_APP_BASE_URL2;
-  const logout = async () => {
-    const res = await fetch(`${baseUrl}/api/logout`, {
-      method: "POST",
-    });
-    // if (res.status) {
-    //   toast.success(`${res.message}`, {
-    //     position: "top-center",
-    //     autoClose: 2000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "light",
-    //   });
-    //   navigate("/");
-    // }
-    // window.location.reload();
-    localStorage.removeItem("user");
-    setCurrentUser(null);
-    navigate("/");
-  };
+function MessageCountNav() {
+  const user = useAuth();
+
+  const [msg, setMsg] = useState(user?.user?.message);
+
   useEffect(() => {
     const ably = new Ably.Realtime({
       key: "VSU5GA.7M4Y5Q:4Tok9TlkaNq5T8u5dKnJ42pu3oZrH0GYqKpkNPVqsHE",
@@ -41,29 +20,16 @@ function MessageCountNav({ currentUser, coinBalance, setCurrentUser }) {
     });
   }, []);
   return (
-    <div className="py-4 bg-green-600  md:pl-28 md:pr-10 px-2">
-      <div className="flex justify-between items-center">
-        <Link
-          to="/"
-          className="text-2xl font-bold text-white bg-black rounded-md px-2"
-        >
-          Whats
-          <span className="text-yellow-300">Bulk</span>
-        </Link>
-        <button
-          onClick={logout}
-          className="bg-[#E0E8FF] font-bold flex md:ml-8 py-1 text-sm md:text-md  px-2 rounded-md  justify-center items-center"
-        >
-          <CgLogOff size={24} className="mr-2" /> Log Out
-        </button>
-      </div>
+    <div className="py-4 px-2">
+      <div className="flex justify-center mt-3">
+        <div className=" bg-yellow-300 rounded text-center px-10 py-4">
+          <p className="text-black text-sm md:text-lg px-2 rounded-md">
+            {user?.user?.email}
+          </p>
 
-      <div className="flex  justify-center mt-3">
-        <div className="text-black text-sm md:text-lg bg-yellow-300 px-2 mr-8 rounded-md">
-          <p>{currentUser?.email}</p>
-        </div>
-        <div className="text-black text-sm md:text-lg bg-yellow-300 px-2  rounded-md">
-          <p>Message : 💰 {msg}</p>
+          <p className="text-black text-sm md:text-lg px-2  rounded-md">
+            Message : 💰 {msg}
+          </p>
         </div>
       </div>
     </div>

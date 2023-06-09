@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import forgot from "../images/forgot.jpg";
 import whatsapp from "../images/whatsapp-logo.png";
 import { toast } from "react-toastify";
-
+import { AiOutlineLeft } from "react-icons/ai";
+import { Link } from "react-router-dom";
 function ForgotPassword() {
   const [inputs, setInputs] = useState({
     email: "",
@@ -117,6 +118,14 @@ function ForgotPassword() {
                 value="Reset"
               />
             </form>
+            <div className="flex justify-center ">
+              <Link to="/" className="flex mt-6 px-4 items-center">
+                <AiOutlineLeft className="block" size={30} />
+                <span className="block text-white font-semibold">
+                  Back To Home
+                </span>
+              </Link>
+            </div>
           </div>
         </div>
         <div

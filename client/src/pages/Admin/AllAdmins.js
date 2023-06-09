@@ -4,7 +4,6 @@ import useUsers from "./../../components/Hooks/useUsers";
 function AllAdmins() {
   const [users] = useUsers([]);
   const admin = users.filter((u) => u.role === "admin");
-  console.log(admin);
 
   const removeUser = (email) => {
     // fetch(`https://aziza-fashion-world.onrender.com/user/${email}`, {

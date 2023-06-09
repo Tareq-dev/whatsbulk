@@ -5,16 +5,18 @@ import { LuLayoutDashboard } from "react-icons/lu";
 import { HiUsers } from "react-icons/hi";
 import { FaUserGraduate } from "react-icons/fa";
 import { BiLogOutCircle } from "react-icons/bi";
+import { useAuth } from "../../components/context/auth";
 
 function Dashboard({ admin, setAdmin, currentUser }) {
   const navigate = useNavigate();
   const baseUrl = process.env.REACT_APP_BASE_URL2;
-
+  const auth = useAuth();
   const logout = async () => {
     const res = await fetch(`${baseUrl}/api/logout`, {
       method: "POST",
     });
     // window.location.reload();
+    auth.logout();
     localStorage.removeItem("user");
     setAdmin([]);
     navigate("/");

@@ -5,6 +5,7 @@ import { saveAs } from "file-saver";
 import Loading from "./../components/Loading";
 import Form from "./../components/Form";
 import MessageCountNav from "../components/MessageCountNav";
+import Navbar from "../components/Navbar";
 
 function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
   const [qrSrc, setQrSrc] = useState([]);
@@ -41,8 +42,8 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
       setHideQr(true);
     });
 
-  
     const channel2 = ably.channels.get("loading-messages");
+
     const channel3 = ably.channels.get("user");
 
     channel2.subscribe("loading-messages", (message) => {
@@ -79,12 +80,12 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
   }
   return (
     <div className="">
+      <Navbar />
       <MessageCountNav
-      currentUser={currentUser}
+        currentUser={currentUser}
         setCurrentUser={setCurrentUser}
         coinBalance={coinBalance}
       />
-
       {thanks ? (
         <div
           ref={modalRef}
@@ -129,7 +130,7 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
               currentUser={currentUser}
             />
           ) : (
-            <div className="py-8 md:py-16 my-8 md:my-16 px-8 bg-white md:flex md:justify-center items-center md:mx-64">
+            <div className="py-8 md:py-16 my-8 md:my-14 px-8 bg-white md:flex md:justify-center items-center md:mx-64">
               <div>
                 <h1 className="text-2xl font-bold mb-6">
                   Use WhatsApp On your computer

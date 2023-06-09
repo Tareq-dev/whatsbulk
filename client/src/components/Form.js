@@ -4,6 +4,7 @@ import { AiOutlineCloudUpload } from "react-icons/ai";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { FiAlertOctagon } from "react-icons/fi";
+import { useAuth } from "./context/auth";
 
 function Form({
   coinBalance,
@@ -21,7 +22,9 @@ function Form({
   const [unReg, setUnReg] = useState();
   const [server_error, setServer_error] = useState("");
   const [balanceAlert, setBalanceAlert] = useState(false);
-  const email = currentUser.email;
+  const auth = useAuth();
+
+  const email = auth?.user?.email;
   const [CSVData, setCSVData] = useState([]);
   const baseUrl = process.env.REACT_APP_BASE_URL2;
 
@@ -130,7 +133,7 @@ function Form({
             theme: "light",
           });
         }
-        
+
         if (response.data.success) {
           toast.success(`🚀${response.data.message}`, {
             position: "top-center",
@@ -315,7 +318,7 @@ function Form({
           />
 
           <div className="flex items-center justify-center w-full ">
-            <div className="border border-gray-400 my-2 py-2 rounded-md px-4 flex items-center justify-center bg-white w-80">
+            <div className="border border-gray-400 my-2 py-2 rounded-md px-4 flex items-center justify-center bg-white w-[290px] md:w-80">
               <label
                 htmlFor="media-upload"
                 className="cursor-pointer flex justify-center"
