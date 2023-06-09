@@ -28,19 +28,11 @@ function Dashboard({ admin, setAdmin, currentUser }) {
       <div className="drawer drawer-mobile">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col">
-          <div className="pt-4 flex justify-end px-4">
-            <label
-              htmlFor="my-drawer-2"
-              className="bg-white px-2 py-1 font-bold rounded-xl shadow-md drawer-button lg:hidden"
-            >
-              Open Admin drawer
-            </label>
-          </div>
           <Outlet></Outlet>
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-56 bg-green-300 text-base-content border-r md:ml-8 md:my-4 rounded-3xl">
+          <ul className="menu p-4 w-56 h-72 md:h-96 bg-green-300 text-base-content border-r md:ml-8 md:my-4 rounded-r-3xl md:rounded-3xl">
             {/* <!-- Sidebar content here --> */}
             <li>
               <NavLink

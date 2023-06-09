@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import ReactPaginate from "react-paginate";
 
 function AllUser() {
   const [user, setUsers] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedEmail, setSelectedEmail] = useState("");
-  // const [selectedMessage, setSelectedMessage] = useState("");
+
   const [updatedMessage, setUpdatedMessage] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10); // Adjust the number of items per page as needed
 
   const openModal = (email) => {
     setSelectedEmail(email);
-    // setSelectedMessage(message);
+
     setIsOpen(true);
   };
 
@@ -73,6 +76,16 @@ function AllUser() {
     u.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
+
+  const pageCount = Math.ceil(filteredUsers.length / itemsPerPage);
+
+  const handlePageChange = ({ selected }) => {
+    setCurrentPage(selected + 1);
+  };
+
   return (
     <div>
       <p className="text-center py-5 md:text-4xl">All Users</p>
@@ -100,7 +113,7 @@ function AllUser() {
             </tr>
           </thead>
           <tbody>
-            {filteredUsers.map((u, i) => (
+            {currentItems.map((u, i) => (
               <tr user={u} key={i}>
                 <td>{i + 1}</td>
                 <td>{u?.email}</td>
@@ -108,7 +121,7 @@ function AllUser() {
                 <td>{u?.message}</td>
                 <td>
                   <button
-                    className="bg-purple-300 hover:bg-purple-500 text-white font-bold py-2 px-4 rounded"
+                    className="bg-purple-400 hover:bg-purple-500 text-white font-bold py-2 px-4 rounded"
                     onClick={() => openModal(u?.email, u?.message)}
                   >
                     Update
@@ -131,7 +144,23 @@ function AllUser() {
           </tbody>
         </table>
       </div>
-
+      <div className="flex justify-center my-8">
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          pageCount={pageCount}
+          onPageChange={handlePageChange}
+          containerClassName={"flex justify-center items-center mt-4"}
+          previousLinkClassName={
+            "px-3 py-1 bg-gray-300 ml-2 font-bold rounded-lg"
+          }
+          nextLinkClassName={"px-3 py-1 bg-gray-300 ml-2 font-bold rounded-lg"}
+          disabledClassName={"invisible"}
+          activeClassName={"bg-green-600 text-white"}
+          pageClassName={"rounded-lg bg-purple-500 mx-4"}
+          pageLinkClassName={"px-4 py-1 rounded-lg hover:bg-green-400 "}
+        />
+      </div>
       {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="bg-green-200 p-4 w-80 rounded-lg border relative">
