@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import login from "../images/login.jpg";
 import whatsapp from "../images/whatsapp-logo.png";
 import { toast } from "react-toastify";
 import { AiOutlineLeft } from "react-icons/ai";
-function Register({ setCurrentUser }) {
+import { useAuth } from "../components/context/auth";
+
+function Register() {
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -24,6 +26,10 @@ function Register({ setCurrentUser }) {
     // Check if email is in a valid format
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
+
+  const auth = useAuth();
+  const location = useLocation();
+  const redirectPath = location.state?.from?.pathname || "/";
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -64,9 +70,8 @@ function Register({ setCurrentUser }) {
             progress: undefined,
             theme: "light",
           });
-          setCurrentUser(data.data);
-          navigate("/main");
-          window.location.reload();
+          auth.login(data.data);
+          navigate(redirectPath, { replace: true });
         }
 
         if (data.status === 0) {

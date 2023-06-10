@@ -74,8 +74,7 @@ function Navbar() {
             )}
           </ul>
         </div>
-
-        <div>
+        <div className="mr-4 md:mr-0">
           <Link
             to="/"
             className="text-2xl font-bold text-white bg-black rounded-md px-2"
@@ -84,29 +83,31 @@ function Navbar() {
             <span className="text-yellow-300">Bulk</span>
           </Link>
         </div>
-        <div>
-          <label
-            htmlFor="my-drawer-2"
-            tabIndex={0}
-            className="btn btn-ghost lg:hidden"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-8 w-8"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+        {user?.role === "admin" && (
+          <div>
+            <label
+              htmlFor="my-drawer-2"
+              tabIndex={0}
+              className="btn btn-ghost lg:hidden"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
-          </label>
-          <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-        </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-8 w-8"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
+            </label>
+            <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
+          </div>
+        )}
       </div>
 
       {/* ---------------------Desktop--------------------- */}
