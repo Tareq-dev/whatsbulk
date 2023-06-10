@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import { LuLayoutDashboard } from "react-icons/lu";
@@ -12,7 +12,7 @@ function Dashboard({ admin, setAdmin, currentUser }) {
   const baseUrl = process.env.REACT_APP_BASE_URL2;
   const auth = useAuth();
   const logout = async () => {
-    const res = await fetch(`${baseUrl}/api/logout`, {
+    await fetch(`${baseUrl}/api/logout`, {
       method: "POST",
     });
     // window.location.reload();

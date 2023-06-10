@@ -21,12 +21,14 @@ function AllUser() {
   const closeModal = () => {
     setIsOpen(false);
   };
+
   const baseUrl = process.env.REACT_APP_BASE_URL2;
+
   useEffect(() => {
     fetch(`${baseUrl}/api/all-users`)
       .then((res) => res.json())
       .then((data) => setUsers(data.data));
-  }, [isOpen]);
+  }, [isOpen, baseUrl]);
 
   const makeAdmin = (email) => {
     fetch(`${baseUrl}/api/make-admin/${email}`, {
@@ -49,6 +51,7 @@ function AllUser() {
         console.error(error);
       });
   };
+
   const updateBalance = () => {
     fetch(`${baseUrl}/api/update-balance/${selectedEmail}/${updatedMessage}`, {
       method: "POST",
@@ -72,7 +75,8 @@ function AllUser() {
         console.error(error);
       });
   };
-  const filteredUsers = user.filter((u) =>
+
+  const filteredUsers = user?.filter((u) =>
     u.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -93,8 +97,8 @@ function AllUser() {
         <div>
           <input
             type="text"
-            className="border outline-none  rounded-md px-4 py-2 "
-            placeholder="Search by email"
+            className="border outline-none rounded-md px-4 py-2"
+            placeholder="Search by email or name"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import registration from "../images/registration.jpg";
 import whatsapp from "../images/whatsapp-logo.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -19,7 +19,6 @@ function Login() {
   const [errors, setErrors] = useState({
     email: "",
     password: "",
-    server_error: "",
   });
   const baseUrl = process.env.REACT_APP_BASE_URL2;
 
@@ -99,7 +98,6 @@ function Login() {
     setErrors((prev) => ({
       ...prev,
       [e.target.name]: "",
-      ["server_error"]: "",
     }));
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };

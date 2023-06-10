@@ -7,7 +7,7 @@ const useUsers = () => {
     fetch(`${baseUrl}/api/all-users`)
       .then((res) => res.json())
       .then((data) => setUsers(data.data));
-  }, []);
+  }, [baseUrl]);
 
   return [users, setUsers];
 };

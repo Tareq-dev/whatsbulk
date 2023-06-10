@@ -9,7 +9,7 @@ function Navbar() {
   const user = auth?.user;
   const navigate = useNavigate();
   const logout = async () => {
-    const res = await fetch(`${baseUrl}/api/logout`, {
+    await fetch(`${baseUrl}/api/logout`, {
       method: "POST",
     });
 

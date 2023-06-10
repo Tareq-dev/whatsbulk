@@ -94,7 +94,6 @@ function Register() {
     setErrors((prev) => ({
       ...prev,
       [e.target.name]: "",
-      ["server_error"]: "",
     }));
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };

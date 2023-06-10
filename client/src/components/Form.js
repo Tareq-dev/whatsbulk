@@ -19,8 +19,6 @@ function Form({
   const [whatsappNumber, setWhatsappNumber] = useState("");
   const [message, setMessage] = useState("");
   const [file, setFile] = useState(null);
-  const [unReg, setUnReg] = useState();
-  const [server_error, setServer_error] = useState("");
   const [balanceAlert, setBalanceAlert] = useState(false);
   const auth = useAuth();
 
@@ -289,7 +287,7 @@ function Form({
             )}
           </div>
 
-          {unReg ? (
+          {/* {unReg ? (
             <div>
               <p className="text-red-500 text-center mt-1">
                 Unregistered Number -
@@ -302,7 +300,7 @@ function Form({
             </div>
           ) : (
             ""
-          )}
+          )} */}
 
           <label htmlFor="message" className="text-gray-600 mb-2 mt-4">
             Message

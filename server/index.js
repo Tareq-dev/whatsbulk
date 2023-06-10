@@ -11,7 +11,7 @@ const { ably } = require("./config/realtimeAbly.js");
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://whatsbulk-self.vercel.app",
     credentials: true,
   })
 );
@@ -46,13 +46,10 @@ client.on("ready", () => {
 
 client.initialize();
 
-function generateSessionId() {
-  return Math.random().toString(36).substr(2, 8);
-}
 app.get("/", (req, res) => {
   res.send("Hello World of whatsbulk");
 });
 
 app.listen(port, () => {
-  console.log(`listening on port ${port}`);
+  console.log(`listening on 10.jun.2023 port ${port}`);
 });
