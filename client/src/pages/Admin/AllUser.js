@@ -22,7 +22,7 @@ function AllUser() {
     setIsOpen(false);
   };
 
-  const baseUrl = process.env.REACT_APP_BASE_URL2;
+  const baseUrl = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
     fetch(`${baseUrl}/api/all-users`)

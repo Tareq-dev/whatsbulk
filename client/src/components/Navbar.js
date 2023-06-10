@@ -4,7 +4,7 @@ import { useAuth } from "./context/auth";
 import { CgLogOff } from "react-icons/cg";
 
 function Navbar() {
-  const baseUrl = process.env.REACT_APP_BASE_URL2;
+  const baseUrl = process.env.REACT_APP_BASE_URL;
   const auth = useAuth();
   const user = auth?.user;
   const navigate = useNavigate();

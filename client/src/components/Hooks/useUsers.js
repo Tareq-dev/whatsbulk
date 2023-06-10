@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 
 const useUsers = () => {
   const [users, setUsers] = useState([]);
-  const baseUrl = process.env.REACT_APP_BASE_URL2;
+  // base
+  const baseUrl = process.env.REACT_APP_BASE_URL;
   useEffect(() => {
     fetch(`${baseUrl}/api/all-users`)
       .then((res) => res.json())
