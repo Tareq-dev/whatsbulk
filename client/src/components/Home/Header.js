@@ -3,10 +3,16 @@ import hero from "../../images/hero-banner.png";
 import { TbMessage2 } from "react-icons/tb";
 import { BsFillPersonVcardFill } from "react-icons/bs";
 import { RiCustomerService2Fill } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+  const navigate = useNavigate();
+
+  const getStart = () => {
+    navigate("/main");
+  };
   return (
-    <header className=" dark:bg-gray-900">
+    <header className="">
       <div className="container flex flex-col px-6 pt-10 md:py-10 mx-auto space-y-6 lg:h-[32rem] lg:py-16 lg:flex-row lg:items-center">
         <div className="w-full lg:w-1/2">
           <div className="lg:max-w-lg">
@@ -136,6 +142,7 @@ function Header() {
               </div>
             </div>
             <button
+              onClick={getStart}
               type=""
               className="ml-8 px-8 bg-[#16A34A] text-gray-50 hover:bg-green-800 text-xl font-bold py-2 rounded-full mt-8"
             >

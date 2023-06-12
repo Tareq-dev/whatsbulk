@@ -17,39 +17,40 @@ import RequireAuth from "./components/RequireAuth";
 import RequireAdmin from "./components/RequireAdmin";
 function App() {
   const [admin, setAdmin] = useState([]);
-  const baseUrl = process.env.REACT_APP_BASE_URL2;
-  console.log(baseUrl);
+
   return (
-    <AuthProvider>
-      <Routes>
-        <Route path="/" element={<Home admin={admin} />} />
-        <Route path="/login" element={<Login admin={admin} />} />
-        <Route path="/sign_up" element={<Register />} />
-        <Route path="/forgot_password" element={<ForgotPassword />} />
-        <Route path="/reset/:token" element={<NewPassword />} />
-        <Route
-          path="/main"
-          element={
-            <RequireAuth>
-              <Main />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <RequireAdmin>
-              <Dashboard admin={admin} setAdmin={setAdmin} />
-            </RequireAdmin>
-          }
-        >
-          <Route index element={<AdminDashboard />}></Route>
-          <Route path="all-user" element={<AllUser />}></Route>
-          <Route path="admin" element={<AllAdmins />}></Route>
-        </Route>
-      </Routes>
-      <ToastContainer />
-    </AuthProvider>
+    <div className="container md:mx-auto">
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Home admin={admin} />} />
+          <Route path="/login" element={<Login admin={admin} />} />
+          <Route path="/sign_up" element={<Register />} />
+          <Route path="/forgot_password" element={<ForgotPassword />} />
+          <Route path="/reset/:token" element={<NewPassword />} />
+          <Route
+            path="/main"
+            element={
+              <RequireAuth>
+                <Main />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <RequireAdmin>
+                <Dashboard admin={admin} setAdmin={setAdmin} />
+              </RequireAdmin>
+            }
+          >
+            <Route index element={<AdminDashboard />}></Route>
+            <Route path="all-user" element={<AllUser />}></Route>
+            <Route path="admin" element={<AllAdmins />}></Route>
+          </Route>
+        </Routes>
+        <ToastContainer />
+      </AuthProvider>
+    </div>
   );
 }
 

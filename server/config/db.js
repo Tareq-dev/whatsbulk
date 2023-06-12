@@ -20,9 +20,9 @@ db.getConnection(function (err, conn) {
   if (err) {
     console.log(err);
   }
-  console.log("Successfully connect to the database.");
-
+  console.log("Successfully connect to the database...");
   db.releaseConnection(conn);
 });
+ 
 
 module.exports = db;

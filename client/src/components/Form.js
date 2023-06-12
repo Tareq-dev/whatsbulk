@@ -24,7 +24,7 @@ function Form({
 
   const email = auth?.user?.email;
   const [CSVData, setCSVData] = useState([]);
-  const baseUrl = process.env.REACT_APP_BASE_URL2;
+  const baseUrl = process.env.REACT_APP_BASE_URL;
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];

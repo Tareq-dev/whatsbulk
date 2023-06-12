@@ -9,7 +9,7 @@ export default function NewPassword() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const baseUrl = process.env.REACT_APP_BASE_URL2;
+  const baseUrl = process.env.REACT_APP_BASE_URL;
 
   const handleUpdatePassword = async (e) => {
     e.preventDefault();

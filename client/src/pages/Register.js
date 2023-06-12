@@ -13,7 +13,7 @@ function Register() {
     message: "5",
     role: "",
   });
-  const baseUrl = process.env.REACT_APP_BASE_URL2;
+  const baseUrl = process.env.REACT_APP_BASE_URL;
   const [errors, setErrors] = useState({
     email: "",
     password: "",

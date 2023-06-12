@@ -9,16 +9,25 @@ import { useAuth } from "../../components/context/auth";
 
 function Dashboard({ admin, setAdmin, currentUser }) {
   const navigate = useNavigate();
+
   const baseUrl = process.env.REACT_APP_BASE_URL2;
   const auth = useAuth();
+  const user = auth.user;
+  const role = user?.role;
   const logout = async () => {
-    await fetch(`${baseUrl}/api/logout`, {
+    const res = await fetch(`${baseUrl}/api/logout`, {
       method: "POST",
+      body: JSON.stringify({ role }), // Convert the role value to a JSON string
+      headers: {
+        "Content-Type": "application/json", // Use "application/json" as the content type
+      },
     });
-    // window.location.reload();
-    auth.logout();
-    localStorage.removeItem("user");
-    setAdmin([]);
+    const data = await res.json();
+    if (data.status) {
+      auth.logout();
+      localStorage.removeItem("user");
+      setAdmin([]);
+    }
     navigate("/");
   };
 

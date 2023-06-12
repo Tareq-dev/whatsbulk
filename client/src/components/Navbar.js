@@ -1,12 +1,13 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 import { useAuth } from "./context/auth";
 import { CgLogOff } from "react-icons/cg";
 
 function Navbar() {
-  const baseUrl = process.env.REACT_APP_BASE_URL2;
+  const baseUrl = process.env.REACT_APP_BASE_URL;
   const auth = useAuth();
   const user = auth?.user;
+
   const navigate = useNavigate();
   const logout = async () => {
     await fetch(`${baseUrl}/api/logout`, {
@@ -18,7 +19,9 @@ function Navbar() {
   };
   return (
     <div className="navbar bg-[#16A34A] border-b px-1 text-white">
-      <div className="flex justify-between w-full md:navbar-start">
+      <div className="flex justify-between w-full lg:navbar-start">
+        {/* ---------------------Mobile--------------------- */}
+
         <div className="dropdown flex">
           <div>
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -74,7 +77,7 @@ function Navbar() {
             )}
           </ul>
         </div>
-        <div className="mr-4 md:mr-0">
+        <div className="md:ml-6 md:mr-0">
           <Link
             to="/"
             className="text-2xl font-bold text-white bg-black rounded-md px-2"
