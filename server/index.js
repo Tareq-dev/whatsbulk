@@ -8,10 +8,10 @@ const { client } = require("./config/whatsapp_config.js");
 const { ably } = require("./config/realtimeAbly.js");
 // http://localhost:3000
 //https://whatsbulk-self.vercel.app
-
+// url
 app.use(
   cors({
-    origin: "https://whatsbulk-self.vercel.app",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );

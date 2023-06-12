@@ -22,7 +22,7 @@ function AllUser() {
     setIsOpen(false);
   };
 
-  const baseUrl = process.env.REACT_APP_BASE_URL;
+  const baseUrl = process.env.REACT_APP_BASE_URL2;
 
   useEffect(() => {
     fetch(`${baseUrl}/api/all-users`)
@@ -80,6 +80,8 @@ function AllUser() {
     u.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  console.log(filteredUsers);
+  
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredUsers.slice(indexOfFirstItem, indexOfLastItem);

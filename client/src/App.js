@@ -17,7 +17,7 @@ import RequireAuth from "./components/RequireAuth";
 import RequireAdmin from "./components/RequireAdmin";
 function App() {
   const [admin, setAdmin] = useState([]);
-  const baseUrl = process.env.REACT_APP_BASE_URL;
+  const baseUrl = process.env.REACT_APP_BASE_URL2;
   console.log(baseUrl);
   return (
     <AuthProvider>
