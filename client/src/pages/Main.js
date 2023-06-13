@@ -21,6 +21,17 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.value);
   };
+
+  ///getting isReady session from local storage
+  useEffect(() => {
+    const sessionId = JSON.parse(localStorage.getItem("isReady"));
+
+    if (sessionId) {
+      setHideQr(true);
+    }
+  }, []);
+
+  /// ably realtime
   useEffect(() => {
     const ably = new Ably.Realtime({
       key: "VSU5GA.7M4Y5Q:4Tok9TlkaNq5T8u5dKnJ42pu3oZrH0GYqKpkNPVqsHE",
@@ -40,6 +51,7 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
     channel.subscribe((message) => {
       setReadyMessage(`${message.data}`);
       setHideQr(true);
+      localStorage.setItem("isReady", JSON.stringify(true));
     });
 
     const channel2 = ably.channels.get("loading-messages");
@@ -61,6 +73,8 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
     //   ably.close();
     // };
   }, [data]);
+
+  /// loading
   useEffect(() => {
     setLoadingData("Loading...");
     setTimeout(() => {
@@ -69,7 +83,7 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
   }, []);
   const handleDownload = () => {
     const blob = new Blob([data], { type: "text/csv;charset=utf-8" });
-    const fileName = `${client.user_number}-${client.user_name}.csv`;
+    const fileName = `${client?.user_number}-${client?.user_name}.csv`;
     saveAs(blob, fileName);
   };
   const modalRef = useRef();
