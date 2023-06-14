@@ -22,22 +22,6 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
     setSelectedOption(e.target.value);
   };
 
-  ///getting QR Code from server
-  // const baseUrl = process.env.REACT_APP_BASE_URL;
-  // useEffect(() => {
-  //   setLoading(true);
-  //   fetch(`${baseUrl}/api/scan`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       const qr = data?.qr;
-  //       console.log(qr);
-  //       if (qr) {
-  //         QRCode.toDataURL(qr).then(setQrSrc);
-  //         setLoading(false);
-  //       }
-  //     });
-  // }, []);
-
   ///getting isReady session from local storage
   useEffect(() => {
     const sessionId = JSON.parse(localStorage.getItem("isReady"));
@@ -159,7 +143,7 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
               currentUser={currentUser}
             />
           ) : (
-            <div className="py-8 md:py-16 my-8 md:my-14 px-8 bg-white md:flex md:justify-center items-center md:mx-64">
+            <div className="py-8 md:py-16 mb-4 md:my-14 px-8 bg-white md:flex md:justify-center items-center md:mx-64 mx-2">
               <div>
                 <h1 className="text-2xl font-bold mb-6">
                   Use WhatsApp On your computer

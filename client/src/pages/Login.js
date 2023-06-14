@@ -113,7 +113,7 @@ function Login() {
         <div className={"md:w-1/2 flex justify-center items-center px-12"}>
           <div className={"w-full max-w-sm"}>
             <div className="flex justify-center items-center">
-              <img className="h-32" src={whatsapp} alt="" />
+              <img className="h-20 md:h-32" src={whatsapp} alt="" />
             </div>
             <h2 className={"text-3xl md:text-4xl font-bold text-white mb-2"}>
               Welcome Back
@@ -177,11 +177,19 @@ function Login() {
                 Login
               </button>
               <p className="md:hidden text-white py-2">
-                Don't have an account?{" "}
+                Don't have an account?
                 <span className="underline text-black cursor-pointer">
                   <Link to="/sign_up">Create One</Link>
                 </span>
               </p>
+              <div className="flex justify-center md:hidden">
+                <Link to="/" className="flex mt-6 px-4 items-center">
+                  <AiOutlineLeft className="block" size={30} />
+                  <span className="block text-white font-semibold">
+                    Back To Home
+                  </span>
+                </Link>
+              </div>
             </form>
           </div>
         </div>

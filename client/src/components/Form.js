@@ -181,7 +181,7 @@ function Form({
     }
   }
   return (
-    <div className="flex justify-center items-center mt-8">
+    <div className="flex justify-center items-center md:my-8">
       {balanceAlert ? (
         <div
           ref={modalRef}
@@ -254,11 +254,10 @@ function Form({
                   min="0"
                   id="phoneNumber"
                   name="phoneNumber"
-                  placeholder="Enter number with country code"
+                  placeholder="Enter number"
                   value={whatsappNumber}
                   onChange={handlePhoneChange}
-                  className="border border-gray-400 rounded-lg py-2 px-4 w-80 outline-none  "
-                  // required
+                  className="border border-gray-400 rounded-lg py-2 px-4 w-72 md:w-80 outline-none  "
                 />
               </div>
             )}
@@ -277,28 +276,13 @@ function Form({
                     type="file"
                     name="csvFile"
                     accept=".csv"
-                    className="w-80 my-4 px-12 cursor-pointer"
+                    className="w-72 md:w-80 my-4 px-12 cursor-pointer"
                     onChange={handleFileUpload}
                   />
                 </div>
               </div>
             )}
           </div>
-
-          {/* {unReg ? (
-            <div>
-              <p className="text-red-500 text-center mt-1">
-                Unregistered Number -
-              </p>
-              {unReg?.map((u, i) => (
-                <span key={i} className="text-red-500">
-                  {u} ,
-                </span>
-              ))}
-            </div>
-          ) : (
-            ""
-          )} */}
 
           <label htmlFor="message" className="text-gray-600 mb-2 mt-4">
             Message
@@ -309,7 +293,7 @@ function Form({
             placeholder="Enter message"
             value={message}
             onChange={handleMessageChange}
-            className="border border-gray-400 rounded-lg py-2 px-4 w-80 h-32 outline-none "
+            className="border border-gray-400 rounded-lg py-2 px-4 w-72 md:w-80 h-32 outline-none "
             required
           />
 

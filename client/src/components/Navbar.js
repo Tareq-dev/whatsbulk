@@ -9,9 +9,17 @@ function Navbar() {
   const user = auth?.user;
 
   const navigate = useNavigate();
+
+  const isReady = JSON.parse(localStorage.getItem("isReady"));
+
+  console.log(isReady);
   const logout = async () => {
     const res = await fetch(`${baseUrl}/api/logout`, {
       method: "POST",
+      body: JSON.stringify({ isReady }), // Convert the role value to a JSON string
+      headers: {
+        "Content-Type": "application/json", // Use "application/json" as the content type
+      },
     });
     const data = await res.json();
     if (data.status) {
@@ -47,9 +55,13 @@ function Navbar() {
             tabIndex={0}
             className="menu bg-[#16A34A] menu-compact dropdown-content mt-16 p-4 shadow rounded-box w-52"
           >
-            <li className="py-4">
-              <Link to="/main">Main</Link>
-            </li>
+            {user?.role === "admin" ? (
+              ""
+            ) : (
+              <li className="py-4">
+                <Link to="/main">Main</Link>
+              </li>
+            )}
             {user ? (
               <div className="flex md:justify-end items-center">
                 {user?.role === "" && (
@@ -118,9 +130,11 @@ function Navbar() {
       {/* ---------------------Desktop--------------------- */}
       <div className="navbar-end hidden lg:flex mr-14">
         <ul className="menu menu-horizontal px-1">
-          <li>
-            <Link to="/main">Main</Link>
-          </li>
+          {user?.role !== "admin" && (
+            <li className="py-4">
+              <Link to="/main">Main</Link>
+            </li>
+          )}
           {user ? (
             <div className="flex md:justify-end items-center">
               {user?.role === "" && (
