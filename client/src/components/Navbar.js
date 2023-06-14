@@ -10,12 +10,14 @@ function Navbar() {
 
   const navigate = useNavigate();
   const logout = async () => {
-    await fetch(`${baseUrl}/api/logout`, {
+    const res = await fetch(`${baseUrl}/api/logout`, {
       method: "POST",
     });
-
-    auth.logout();
-    navigate("/");
+    const data = await res.json();
+    if (data.status) {
+      auth.logout();
+      navigate("/");
+    }
   };
   return (
     <div className="navbar bg-[#16A34A] border-b px-1 text-white">
@@ -77,7 +79,7 @@ function Navbar() {
             )}
           </ul>
         </div>
-        <div className="md:ml-6 md:mr-0">
+        <div className="mr-2 md:ml-6 md:mr-0">
           <Link
             to="/"
             className="text-2xl font-bold text-white bg-black rounded-md px-2"

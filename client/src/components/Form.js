@@ -7,9 +7,6 @@ import { FiAlertOctagon } from "react-icons/fi";
 import { useAuth } from "./context/auth";
 
 function Form({
-  coinBalance,
-  currentUser,
-  setCoinBalance,
   selectedOption,
   handleOptionChange,
   readyMessage,
@@ -253,7 +250,8 @@ function Form({
                   Whatsapp Number with country code
                 </label>
                 <input
-                  type="tel"
+                  type="number"
+                  min="0"
                   id="phoneNumber"
                   name="phoneNumber"
                   placeholder="Enter number with country code"

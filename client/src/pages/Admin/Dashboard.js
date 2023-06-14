@@ -23,7 +23,7 @@ function Dashboard({ admin, setAdmin, currentUser }) {
       },
     });
     const data = await res.json();
-    if (data.status) {
+    if (data?.status) {
       auth.logout();
       localStorage.removeItem("user");
       setAdmin([]);

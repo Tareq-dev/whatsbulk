@@ -63,7 +63,7 @@ function Login() {
         });
 
         const data = await res.json();
-        if (data.status) {
+        if (data.status === 1) {
           toast.success(`🚀${data.message}`, {
             position: "top-center",
             autoClose: 2000,
@@ -89,6 +89,7 @@ function Login() {
             progress: undefined,
             theme: "light",
           });
+          setLoading(false);
         }
       } catch (error) {}
     }

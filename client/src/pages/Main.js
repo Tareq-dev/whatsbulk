@@ -22,10 +22,25 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
     setSelectedOption(e.target.value);
   };
 
+  ///getting QR Code from server
+  // const baseUrl = process.env.REACT_APP_BASE_URL;
+  // useEffect(() => {
+  //   setLoading(true);
+  //   fetch(`${baseUrl}/api/scan`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       const qr = data?.qr;
+  //       console.log(qr);
+  //       if (qr) {
+  //         QRCode.toDataURL(qr).then(setQrSrc);
+  //         setLoading(false);
+  //       }
+  //     });
+  // }, []);
+
   ///getting isReady session from local storage
   useEffect(() => {
     const sessionId = JSON.parse(localStorage.getItem("isReady"));
-
     if (sessionId) {
       setHideQr(true);
     }
@@ -69,9 +84,9 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
       setClient(message.data);
     });
 
-    // return () => {
-    //   ably.close();
-    // };
+    return () => {
+      ably.close();
+    };
   }, [data]);
 
   /// loading
