@@ -9,6 +9,13 @@ function MessageCountNav() {
 
   const [msg, setMsg] = useState(user?.user?.message);
 
+  const baseUrl = process.env.REACT_APP_BASE_URL2;
+
+  useEffect(() => {
+    fetch(`${baseUrl}/api/user/${user?.user.email}`)
+      .then((res) => res.json())
+      .then((data) => setMsg(data.message));
+  }, [baseUrl,user?.user.email]);
   useEffect(() => {
     const ably = new Ably.Realtime({
       key: "VSU5GA.7M4Y5Q:4Tok9TlkaNq5T8u5dKnJ42pu3oZrH0GYqKpkNPVqsHE",
@@ -18,7 +25,7 @@ function MessageCountNav() {
     msgCountEvent.subscribe((message) => {
       setMsg(message?.data?.updatedBalance);
     });
-  }, []);
+  }, [msg]);
   return (
     <div className="py-4 px-2">
       <div className="flex justify-center mt-3">

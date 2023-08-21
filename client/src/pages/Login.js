@@ -15,12 +15,13 @@ function Login() {
     email: "",
     password: "",
     message: "",
+    role: "",
   });
   const [errors, setErrors] = useState({
     email: "",
     password: "",
   });
-  const baseUrl = process.env.REACT_APP_BASE_URL;
+  const baseUrl = process.env.REACT_APP_BASE_URL2;
 
   const auth = useAuth();
   const location = useLocation();

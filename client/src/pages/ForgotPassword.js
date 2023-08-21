@@ -12,7 +12,7 @@ function ForgotPassword() {
     email: "",
     server_error: "",
   });
-  const baseUrl = process.env.REACT_APP_BASE_URL;
+  const baseUrl = process.env.REACT_APP_BASE_URL2;
   const isValidEmail = (email) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };

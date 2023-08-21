@@ -9,10 +9,14 @@ const { ably } = require("./config/realtimeAbly.js");
 
 // http://localhost:3000
 //https://whatsbulk-self.vercel.app
+
 // url
+
+//I should be added env on vercel
+
 app.use(
   cors({
-    origin: "https://whatsbulk-self.vercel.app",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
@@ -23,15 +27,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 app.use("/api", router);
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
 
 const channel = ably.channels.get("scan");
 const channel1 = ably.channels.get("my-whatapp");
-const channel2 = ably.channels.get("session");
 const channel3 = ably.channels.get("user");
 
 client.on("qr", (qr) => {
-  // console.log(qr);
   channel.publish("qr", qr);
 });
 

@@ -10,7 +10,7 @@ import { useAuth } from "../../components/context/auth";
 function Dashboard({ admin, setAdmin, currentUser }) {
   const navigate = useNavigate();
 
-  const baseUrl = process.env.REACT_APP_BASE_URL;
+  const baseUrl = process.env.REACT_APP_BASE_URL2;
   const auth = useAuth();
   const user = auth.user;
   const role = user?.role;

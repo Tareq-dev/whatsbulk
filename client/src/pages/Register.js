@@ -10,10 +10,12 @@ function Register() {
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
-    message: "5",
+    message: "15",
     role: "",
   });
-  const baseUrl = process.env.REACT_APP_BASE_URL;
+  const baseUrl = process.env.REACT_APP_BASE_URL2;
+  console.log(baseUrl);
+
   const [errors, setErrors] = useState({
     email: "",
     password: "",

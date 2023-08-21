@@ -21,7 +21,7 @@ function Form({
 
   const email = auth?.user?.email;
   const [CSVData, setCSVData] = useState([]);
-  const baseUrl = process.env.REACT_APP_BASE_URL;
+  const baseUrl = process.env.REACT_APP_BASE_URL2;
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
@@ -320,7 +320,7 @@ function Form({
               {file && (
                 <div className="ml-4 mt-2">
                   <p className="text-base leading-normal text-gray-500">
-                    {file.name}
+                    {file.name.substring(file.name.length - 15)}
                   </p>
                 </div>
               )}

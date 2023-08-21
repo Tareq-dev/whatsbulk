@@ -7,7 +7,7 @@ import Form from "./../components/Form";
 import MessageCountNav from "../components/MessageCountNav";
 import Navbar from "../components/Navbar";
 
-function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
+function Main({ currentUser, setCurrentUser }) {
   const [qrSrc, setQrSrc] = useState([]);
   const [hideQr, setHideQr] = useState(false);
   const [readyMessage, setReadyMessage] = useState("");
@@ -97,7 +97,6 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
       <MessageCountNav
         currentUser={currentUser}
         setCurrentUser={setCurrentUser}
-        coinBalance={coinBalance}
       />
       {thanks ? (
         <div
@@ -138,8 +137,6 @@ function Main({ currentUser, setCurrentUser, coinBalance, setCoinBalance }) {
               selectedOption={selectedOption}
               handleOptionChange={handleOptionChange}
               setData={setData}
-              setCoinBalance={setCoinBalance}
-              coinBalance={coinBalance}
               currentUser={currentUser}
             />
           ) : (

@@ -23,7 +23,7 @@ function Header() {
               We help businesses connect with their customers.
             </h1>
             <p className="mt-4  text-gray-600">
-              Whatso helps businesses connect with their customers through
+              Whatsbulk helps businesses connect with their customers through
               Messages & WordPress.
             </p>
             <div className="grid gap-6 mt-8 sm:grid-cols-2">

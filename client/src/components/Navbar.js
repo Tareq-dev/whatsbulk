@@ -4,15 +4,13 @@ import { useAuth } from "./context/auth";
 import { CgLogOff } from "react-icons/cg";
 
 function Navbar() {
-  const baseUrl = process.env.REACT_APP_BASE_URL;
+  const baseUrl = process.env.REACT_APP_BASE_URL2;
   const auth = useAuth();
   const user = auth?.user;
-
   const navigate = useNavigate();
 
   const isReady = JSON.parse(localStorage.getItem("isReady"));
 
-  console.log(isReady);
   const logout = async () => {
     const res = await fetch(`${baseUrl}/api/logout`, {
       method: "POST",
