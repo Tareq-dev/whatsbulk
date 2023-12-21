@@ -17,13 +17,13 @@ It help businesses connect with their customers. Whatsbulk helps businesses conn
 Clone the project
 
 ```bash
-  git clone  https://github.com/nlagdhir/whatsapp-api.git
+  git clone  https://github.com/Tareq-dev/whatsbulk.git
 ```
 
 Go to the project directory
 
 ```bash
-   cd  whatsapp-api
+   cd  whatsbulk
 ```
 
 Install dependencies
